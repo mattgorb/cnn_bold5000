@@ -3,7 +3,7 @@ import os
 from skimage import io
 from torchvision import transforms, models
 import torch
-import numpy as np
+import audtorch
 
 filename = './ROIs/CSI1/h5/CSI1_ROIs_TR1.h5'
 
@@ -25,31 +25,34 @@ f = open('./ROIs/stim_lists/CSI01_stim_lists.txt', 'r')
 CSI01_stim_lists = f.read().splitlines()
 f.close()
 
+to_tensor = transforms.Compose([transforms.ToPILImage(), transforms.Resize((375,375)),transforms.ToTensor()])
+
 #load first image
 image_path_full1=os.path.join(image_folder, CSI01_stim_lists[0])
 image = io.imread(image_path_full1)
-to_tensor = transforms.Compose([transforms.ToTensor()])
 image1=to_tensor(image)
-
 
 #load second image
 image_path_full1=os.path.join(image_folder, CSI01_stim_lists[1])
 image = io.imread(image_path_full1)
-to_tensor = transforms.Compose([transforms.ToTensor()])
 image2=to_tensor(image)
 
 
 alexnet = models.alexnet(pretrained=True)
-cos = torch.nn.CosineSimilarity(dim=1, eps=1e-6)
+cos = torch.nn.CosineSimilarity(dim=0, eps=1e-6)
 
 #brain_roi cosine similarity, first two inputs:
 brain1=torch.from_numpy(data[0])
-brain1=torch.from_numpy(data[1])
-brain_similarity=np.corrcoef(data[0], data[1])
+brain2=torch.from_numpy(data[1])
+brain_similarity=cos(brain1,brain2)
+brain_similarity=audtorch.metrics.functional.pearsonr(brain1, brain2).squeeze(dim=0)
 print(brain_similarity)
 
-out1=alexnet.features[:2](image1.unsqueeze(dim=0))#cnn1
-out2=alexnet.features[:2](image2.unsqueeze(dim=0))#cnn1
+out=alexnet.features[:2](image1.unsqueeze(dim=0))#cnn1
+out1=out.view(-1, out.detach().numpy().shape[1]* out.detach().numpy().shape[2]* out.detach().numpy().shape[3])
+
+out=alexnet.features[:2](image2.unsqueeze(dim=0))#cnn1
+out2=out.view(-1, out.detach().numpy().shape[1]* out.detach().numpy().shape[2]* out.detach().numpy().shape[3])
 
 output = cos(out1, out2)
 
