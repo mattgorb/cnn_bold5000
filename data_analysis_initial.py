@@ -20,7 +20,7 @@ data=data['RHPPA']
 
 
 f = open('./ROIs/stim_lists/CSI01_stim_lists.txt', 'r')
-CSI01_stim_lists = f.readlines()
+CSI01_stim_lists = f.read().splitlines()
 f.close()
 
 print(CSI01_stim_lists[1])
