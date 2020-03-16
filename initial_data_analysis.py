@@ -6,7 +6,6 @@ import torch
 import audtorch
 
 filename = './ROIs/CSI1/h5/CSI1_ROIs_TR1.h5'
-
 image_folder='./BOLD5000_Stimuli/Scene_Stimuli/Original_Images/ImageNet'
 
 data={}
@@ -49,10 +48,10 @@ brain_similarity=audtorch.metrics.functional.pearsonr(brain1, brain2).squeeze(di
 print(brain_similarity)
 
 out=alexnet.features[:2](image1.unsqueeze(dim=0))#cnn1
-out1=out.view(-1, out.detach().numpy().shape[1]* out.detach().numpy().shape[2]* out.detach().numpy().shape[3])
+out1=torch.flatten(out)#out.view(-1, out.detach().numpy().shape[1]* out.detach().numpy().shape[2]* out.detach().numpy().shape[3])
 
 out=alexnet.features[:2](image2.unsqueeze(dim=0))#cnn1
-out2=out.view(-1, out.detach().numpy().shape[1]* out.detach().numpy().shape[2]* out.detach().numpy().shape[3])
+out2=torch.flatten(out)#out.view(-1, out.detach().numpy().shape[1]* out.detach().numpy().shape[2]* out.detach().numpy().shape[3])
 
 output = cos(out1, out2)
 
