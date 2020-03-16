@@ -4,10 +4,10 @@ from skimage import io
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 import h5py
+import random
 
 class Bold5000(Dataset):
-
-    def __init__(self, fmri_dir,imagedir,stim_list_dir, transform):
+    def __init__(self, fmri_dir,imagedir,stim_list_dir, transform, batch_size):
         self.data={}
 
         with h5py.File(fmri_dir, 'r') as f:
@@ -19,6 +19,7 @@ class Bold5000(Dataset):
         self.fmri_dir = fmri_dir
         self.imagedir=imagedir
         self.transform = transform
+        self.batch_size=batch_size
 
         self.target_data = self.data['RHPPA']
 
@@ -42,10 +43,12 @@ class Bold5000(Dataset):
             sample = self.transform(sample)
 
         target=self.target_data[idx]
-
         return sample,torch.from_numpy(target), idx
 
-def get_bold5000_dataset():
+    def get_random_idxs(self):
+        return random.choice(self.imagenet_idxs),random.choice(self.imagenet_idxs)
+
+def get_bold5000_dataset(batch_size):
     to_tensor = transforms.Compose([transforms.ToPILImage(), transforms.Resize((32,32)),transforms.ToTensor(),
                                     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
@@ -56,7 +59,7 @@ def get_bold5000_dataset():
     bold5000 = Bold5000(fmri_dir=filename,
                 imagedir=image_folder,
                 stim_list_dir=stim_list,
-                transform=to_tensor)
+                transform=to_tensor, batch_size=batch_size)
     #hmit_dl = DataLoader(bold5000, batch_size=2, shuffle=True)
     return bold5000
 
