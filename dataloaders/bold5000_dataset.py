@@ -30,7 +30,7 @@ class Bold5000(Dataset):
 
 
     def __len__(self):
-        return len(self.test)
+        return len(self.imagenet_idxs)
 
     def __getitem__(self, idx):
         if torch.is_tensor(idx):
