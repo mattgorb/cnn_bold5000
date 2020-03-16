@@ -1,7 +1,7 @@
-import torch
-
 from torch import optim
-from vgg16 import *
+from dataloaders.bold5000_dataset import *
+from dataloaders.cifar10_dataloaders import *
+from models.vgg16 import *
 
 batch_size = 64
 lr = 5e-4
@@ -11,11 +11,8 @@ epochs = 100
 use_cuda = torch.cuda.is_available()
 
 # Load data
-data_loader, _ = get_mnist_dataloaders(batch_size=batch_size)
-img_size = (3, 32, 32)
+cifar10_train_loader, cifar10_test_loader = get_cifar_dataloaders(batch_size=batch_size)
 
-# Define latent spec and model
-latent_spec = {'cont': 10, 'disc': [10]}
 model = VGG()
 if use_cuda:
     model.cuda()
