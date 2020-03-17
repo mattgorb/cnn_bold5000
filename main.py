@@ -31,8 +31,6 @@ else:
 
 model = resnet18()
 
-print(use_cuda)
-sys.exit()
 if use_cuda:
     model.cuda()
 
