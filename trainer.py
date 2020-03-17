@@ -114,7 +114,7 @@ class Trainer():
         total = 0
         self.model.eval()
         with torch.no_grad():
-            for batch_idx, (data, target) in enumerate(self.train_main):
+            for batch_idx, (data, target) in enumerate(self.test_main):
 
                 outputs = self.model(data)
                 _, predicted = torch.max(outputs.data, 1)

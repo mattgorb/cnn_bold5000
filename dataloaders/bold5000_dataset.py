@@ -43,7 +43,6 @@ class Bold5000(Dataset):
             color.gray2rgb(image)
         sample = image
 
-        #print(self.CSI01_stim_lists[idx])
         if self.transform:
             sample = self.transform(sample)
 
