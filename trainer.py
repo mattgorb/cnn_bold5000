@@ -61,7 +61,7 @@ class Trainer():
 
         for batch_idx, (data, target) in enumerate(self.train_main):
             if self.use_cuda:
-                data = data.cuda()
+                data,target = data.cuda(),target.cuda()
 
             self.optimizer.zero_grad()
 
@@ -118,7 +118,8 @@ class Trainer():
         self.model.eval()
         with torch.no_grad():
             for batch_idx, (data, target) in enumerate(self.test_main):
-
+                if self.use_cuda:
+                    data, target = data.cuda(), target.cuda()
                 output = self.model(data)
 
                 test_loss+= self.loss(output, target).item()
