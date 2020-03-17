@@ -8,11 +8,12 @@ wen-add any new libraries to the requirements file
 
 data_analysis_initial:
 
-trying to replicate RDA in paper: 
-https://arxiv.org/pdf/1809.01281.pdf
-page 20
+trying to replicate robustness paper: 
+https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines
 
-on only first two imagenet images 
+using fmri ROI data from bold5000:
+https://arxiv.org/pdf/1809.01281.pdf
+
 
 
 download datasets:
