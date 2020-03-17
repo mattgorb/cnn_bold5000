@@ -4,7 +4,7 @@ import audtorch
 
 class Trainer():
     def __init__(self, model, optimizer, loss, data, weight_file, with_fmri_data=False, print_loss_every=5, epochs=250,
-                 use_cuda=False):
+                 use_cuda=False, alpha_factor=0.5):
 
         self.model = model
         self.optimizer = optimizer
@@ -28,7 +28,7 @@ class Trainer():
         if self.with_fmri_data:
             self.fmri_data = data['fmri_data']
             self.cos = torch.nn.CosineSimilarity(dim=1, eps=1e-08)
-            self.alpha_factor = .5
+            self.alpha_factor = alpha_factor
             self.fmri_loss = []
 
         if self.use_cuda:
