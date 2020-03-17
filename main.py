@@ -21,13 +21,13 @@ data['train_main']=cifar10_train_loader
 data['test_main']=cifar10_test_loader
 
 #Train with fmri data
-train_with_fmri=True
+train_with_fmri=False
 if train_with_fmri:
     get_bold5000_dataset = get_bold5000_dataset(batch_size)
     data['fmri_data']=get_bold5000_dataset
-    weight_file='cifar10_resnet50_fmri.pth'
+    weight_file='model_weights/cifar10_resnet50_fmri.pth'
 else:
-    weight_file='cifar10_resnet50.pth'
+    weight_file='model_weights/cifar10_resnet50.pth'
 
 model = resnet18()
 if use_cuda:

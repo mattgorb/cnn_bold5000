@@ -21,7 +21,7 @@ class Trainer():
         self.test_main=data['test_main']
         self.batch_size = self.train_main.batch_size
 
-        self.with_fmri_data = -with_fmri_data
+        self.with_fmri_data = with_fmri_data
         if self.with_fmri_data:
             self.fmri_data=data['fmri_data']
             self.cos=torch.nn.CosineSimilarity(dim=1, eps=1e-08)
@@ -30,9 +30,6 @@ class Trainer():
 
         if self.use_cuda:
             self.model.cuda()
-
-        # Initialize attributes
-        self.losses = {'loss': []}
 
 
     def loss_fmri(self,output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2):
@@ -51,14 +48,13 @@ class Trainer():
 
 
     def train(self):
-
         for epoch in range(self.epochs):
-            mean_epoch_loss = self.train_epoch()
+            mean_epoch_loss = self.train_epoch(epoch)
             print('Epoch: {} Average loss: {:.2f}'.format(epoch + 1, self.batch_size *  mean_epoch_loss))
-            self.test_epoch()
+            self.test_epoch(epoch)
 
 
-    def train_epoch(self):
+    def train_epoch(self,epoch):
         epoch_loss = 0.
         print_every_loss = 0.
         self.model.train()
@@ -98,28 +94,63 @@ class Trainer():
                                                   len(self.train_main.dataset),mean_loss))
                 print_every_loss = 0.
 
-        outF = open("fmri_losses.txt", "a")
-        for line in self.fmri_loss:
-            outF.write(line)
-            outF.write("\n")
-        outF.close()
-        self.fmri_loss = []
+
+        if self.with_fmri_data:
+            if epoch>0:
+                outF = open("results/fmri_losses.txt", "a")
+            else:
+                outF = open("results/fmri_losses.txt", "w")
+
+            for line in self.fmri_loss:
+                outF.write(line)
+                outF.write("\n")
+            outF.close()
+            self.fmri_loss = []
 
         # Return mean epoch loss
         return epoch_loss / len(self.train_main.dataset)
 
 
-    def test_epoch(self):
+    def test_epoch(self,epoch):
         correct = 0
         total = 0
+        test_loss=0
         self.model.eval()
         with torch.no_grad():
             for batch_idx, (data, target) in enumerate(self.test_main):
 
-                outputs = self.model(data)
-                _, predicted = torch.max(outputs.data, 1)
+                output = self.model(data)
+
+                test_loss+= self.loss(output, target).item()
+
+                _, predicted = torch.max(output.data, 1)
                 total += target.size(0)
                 correct += (predicted == target).sum().item()
+
+        if self.with_fmri_data:
+            test_loss_file="results/test_losses_fmri.txt"
+            test_accuracy_file="results/test_accuracy_fmri.txt"
+        else:
+            test_loss_file="results/test_losses.txt"
+            test_accuracy_file="results/test_accuracy.txt"
+
+
+        if epoch>0:
+            outF = open(test_loss_file, "a")
+        else:
+            outF = open(test_loss_file, "w")
+        outF.write(str(test_loss))
+        outF.write("\n")
+        outF.close()
+
+        if epoch>0:
+            outF = open(test_accuracy_file, "a")
+        else:
+            outF = open(test_accuracy_file, "w")
+        outF.write(str(correct / total))
+        outF.write("\n")
+        outF.close()
+
 
         print('Accuracy of the network on the 10000 test images: %d %%' % (100 * correct / total))
         if correct/total>self.accuracy:
