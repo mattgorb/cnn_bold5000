@@ -21,7 +21,7 @@ data['train_main']=cifar10_train_loader
 data['test_main']=cifar10_test_loader
 
 #Train with fmri data
-train_with_fmri=False
+train_with_fmri=True
 if train_with_fmri:
     get_bold5000_dataset = get_bold5000_dataset(batch_size)
     data['fmri_data']=get_bold5000_dataset
