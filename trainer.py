@@ -2,7 +2,7 @@ import torch
 import audtorch
 
 class Trainer():
-    def __init__(self, model, optimizer,loss,data,weight_file,with_fmri_data=False ,print_loss_every=5, epochs=100,
+    def __init__(self, model, optimizer,loss,data,weight_file,with_fmri_data=False ,print_loss_every=5, epochs=250,
                  use_cuda=False):
 
         self.model = model

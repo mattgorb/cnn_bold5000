@@ -42,6 +42,6 @@ loss = nn.CrossEntropyLoss()
 # Define trainer
 trainer = Trainer(model, optimizer,loss,data, weight_file,with_fmri_data=train_with_fmri,use_cuda=use_cuda)
 
-# Train model for 100 epochs
+# Train model for 250 epochs
 trainer.train()
 
