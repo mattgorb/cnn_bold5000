@@ -5,6 +5,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 import h5py
 import random
+import numpy as np
 
 class Bold5000(Dataset):
     def __init__(self, fmri_dir,imagedir,stim_list_dir, transform, batch_size):
@@ -46,7 +47,17 @@ class Bold5000(Dataset):
         return sample,torch.from_numpy(target), idx
 
     def get_random_idxs(self):
-        return random.choice(self.imagenet_idxs),random.choice(self.imagenet_idxs)
+        return np.random.choice(self.imagenet_idxs, size=(self.batch_size))
+
+    def get_batch(self):
+        sample_list = []
+        target_list = []
+        for i in self.get_random_idxs():
+            sample, target, _ = self[i]
+            sample_list.append(sample)
+            target_list.append(target)
+        return torch.stack(sample_list),torch.stack(target_list)
+
 
 def get_bold5000_dataset(batch_size):
     to_tensor = transforms.Compose([transforms.ToPILImage(), transforms.Resize((32,32)),transforms.ToTensor(),
@@ -60,8 +71,9 @@ def get_bold5000_dataset(batch_size):
                 imagedir=image_folder,
                 stim_list_dir=stim_list,
                 transform=to_tensor, batch_size=batch_size)
-    #hmit_dl = DataLoader(bold5000, batch_size=2, shuffle=True)
     return bold5000
+
+
 
 
 

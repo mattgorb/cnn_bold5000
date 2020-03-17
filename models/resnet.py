@@ -216,8 +216,11 @@ class ResNet(nn.Module):
 
         return x
 
-    def forward(self, x):
+    def forward(self,x,brain_x, brain_x2):
         return self._forward_impl(x)
+
+    def forward_fmri(self,x,brain_x, brain_x2):
+        return self._forward_impl(x), self._forward_impl(brain_x), self._forward_impl(brain_x2)
 
 
 def _resnet(arch, block, layers, pretrained, progress, **kwargs):
