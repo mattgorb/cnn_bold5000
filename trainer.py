@@ -70,6 +70,9 @@ class Trainer():
                 fmri_data, fmri_target = self.fmri_data.get_batch()
                 fmri_data2, fmri_target2 = self.fmri_data.get_batch()
 
+                if self.use_cuda:
+                    fmri_data, fmri_target,fmri_data2, fmri_target2 = fmri_data.cuda(), fmri_target.cuda(),fmri_data2.cuda(), fmri_target2.cuda()
+
                 output, fmri_out1, fmri_out2 = self.model.forward_fmri(data, fmri_data, fmri_data2)
                 loss = self.loss_fmri(output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2)
 
