@@ -216,11 +216,24 @@ class ResNet(nn.Module):
 
         return x
 
+    def _conv_activations(self,x):
+        x = self.conv1(x)
+        x = self.bn1(x)
+        x = self.relu(x)
+        x = self.maxpool(x)
+
+        x = self.layer1(x)
+        x = self.layer2(x)
+        #x = self.layer3(x)
+        #x = self.layer4(x)
+        x=torch.flatten(x,start_dim=1)
+        return x
+
     def forward(self,x,brain_x, brain_x2):
         return self._forward_impl(x)
 
     def forward_fmri(self,x,brain_x, brain_x2):
-        return self._forward_impl(x), self._forward_impl(brain_x), self._forward_impl(brain_x2)
+        return self._forward_impl(x), self._conv_activations(brain_x), self._conv_activations(brain_x2)
 
 
 def _resnet(arch, block, layers, pretrained, progress, **kwargs):

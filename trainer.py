@@ -14,13 +14,15 @@ class Trainer():
         self.use_cuda = use_cuda
 
         self.accuracy=0
-        self.with_fmri_data=-with_fmri_data
+
         self.weight_file=weight_file
 
         self.train_main=data['train_main']
         self.test_main=data['test_main']
-        if data['brain_data']:
-            self.brain_data=data['brain_data']
+
+        self.with_fmri_data = -with_fmri_data
+        if self.with_fmri_data:
+            self.fmri_data=data['fmri_data']
             self.cos=torch.nn.CosineSimilarity(dim=1, eps=1e-08)
             self.alpha_factor=.5
 
@@ -36,18 +38,18 @@ class Trainer():
 
         for epoch in range(self.epochs):
             mean_epoch_loss = self.train_epoch()
-            print('Epoch: {} Average loss: {:.2f}'.format(epoch + 1,
-                                                          self.batch_size *  mean_epoch_loss))
+            print('Epoch: {} Average loss: {:.2f}'.format(epoch + 1, self.batch_size *  mean_epoch_loss))
             self.test_epoch()
 
 
-    def loss_fmri(self,output, target, brain_out1, brain_target, brain_out2, brain_target2):
+    def loss_fmri(self,output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2):
         loss_main=self.loss(output, target)
-        model_sim=self.cos(brain_out1, brain_out2)
-        brain_sim=self.cos(brain_target,brain_target2)
 
-        fmri_loss=audtorch.metrics.functional.pearsonr(model_sim, brain_sim).squeeze(dim=0)
+        model_sim=self.cos(fmri_out1, fmri_out2)
+        fmri_sim=self.cos(fmri_target,fmri_target2)
 
+        fmri_loss=1-audtorch.metrics.functional.pearsonr(model_sim, fmri_sim).squeeze(dim=0)
+        #print(fmri_loss)
         total_loss=loss_main+self.alpha_factor*fmri_loss
         return total_loss
 
@@ -62,13 +64,14 @@ class Trainer():
 
             self.optimizer.zero_grad()
 
-
-
             if self.with_fmri_data:
-                brain_data, brain_target=self.brain_data.get_batch()
-                brain_data2, brain_target2 = self.brain_data.get_batch()
-                output, brain_out1, brain_out2=self.model.forward_fmri(data, brain_data, brain_data2)
-                loss=self.loss_fmri(output, target, brain_out1, brain_target, brain_out2, brain_target2)
+                fmri_data, fmri_target=self.fmri_data.get_batch()
+                fmri_data2, fmri_target2 = self.fmri_data.get_batch()
+                #break
+                output, fmri_out1, fmri_out2=self.model.forward_fmri(data, fmri_data, fmri_data2)
+                loss=self.loss_fmri(output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2)
+
+
             else:
                 output = self.model(data)
                 loss = self.loss(output, target)

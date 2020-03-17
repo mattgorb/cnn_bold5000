@@ -1,6 +1,6 @@
 import os
 import torch
-from skimage import io
+from skimage import io,color
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 import h5py
@@ -38,8 +38,12 @@ class Bold5000(Dataset):
             idx = idx.tolist()
         img_name = os.path.join(self.imagedir, self.CSI01_stim_lists[idx])
         image = io.imread(img_name)
+
+        if len(image.shape)==2:
+            color.gray2rgb(image)
         sample = image
 
+        #print(self.CSI01_stim_lists[idx])
         if self.transform:
             sample = self.transform(sample)
 
@@ -64,7 +68,7 @@ def get_bold5000_dataset(batch_size):
                                     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
     filename = './ROIs/CSI1/h5/CSI1_ROIs_TR1.h5'
-    image_folder='./BOLD5000_Stimuli/Scene_Stimuli/Original_Images/ImageNet'
+    image_folder='./BOLD5000_Stimuli/Scene_Stimuli/Presented_Stimuli/ImageNet'
     stim_list='./ROIs/stim_lists/CSI01_stim_lists.txt'
 
     bold5000 = Bold5000(fmri_dir=filename,
