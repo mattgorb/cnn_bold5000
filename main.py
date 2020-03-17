@@ -30,8 +30,13 @@ else:
     weight_file='model_weights/cifar10_resnet50.pth'
 
 model = resnet18()
+
+print(use_cuda)
+sys.exit()
 if use_cuda:
     model.cuda()
+
+
 
 optimizer = optim.Adam(model.parameters())
 loss = nn.CrossEntropyLoss()
