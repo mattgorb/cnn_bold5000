@@ -13,7 +13,13 @@ https://arxiv.org/pdf/1809.01281.pdf
 
 ## Dataset Links:
 ### BOLD5000_ROIs:
+##### browser:
 https://ndownloader.figshare.com/files/12965447
+##### command line:
+https://s3-eu-west-1.amazonaws.com/pstorage-cmu-348901238291901/12965447/BOLD5000_ROIs.zip
 
 ### BOLD5000_Stimuli:
+##### browser:
 https://ndownloader.figshare.com/files/14042504
+##### command line:
+wget https://s3-eu-west-1.amazonaws.com/pstorage-cmu-348901238291901/14042504/BOLD5000_Stimuli.zip
