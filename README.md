@@ -24,3 +24,5 @@ wget https://s3-eu-west-1.amazonaws.com/pstorage-cmu-348901238291901/12965447/BO
 https://ndownloader.figshare.com/files/14042504
 ##### command line:
 wget https://s3-eu-west-1.amazonaws.com/pstorage-cmu-348901238291901/14042504/BOLD5000_Stimuli.zip
+####
+note: as of 3/17/20, i wasnt able to get all the images from BOLD5000_Stimuli.zip in the links above.  these images are on my local machine and AWS instance.  
