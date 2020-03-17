@@ -19,6 +19,7 @@ class Trainer():
 
         self.train_main=data['train_main']
         self.test_main=data['test_main']
+        self.batch_size = self.train_main.batch_size
 
         self.with_fmri_data = -with_fmri_data
         if self.with_fmri_data:
@@ -50,8 +51,6 @@ class Trainer():
 
 
     def train(self):
-        self.batch_size = self.train_main.batch_size
-        self.model.train()
 
         for epoch in range(self.epochs):
             mean_epoch_loss = self.train_epoch()
