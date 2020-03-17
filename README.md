@@ -10,6 +10,7 @@ https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machine
 
 #### using fmri ROI data from bold5000:
 https://arxiv.org/pdf/1809.01281.pdf
+https://bold5000.github.io/
 
 ## Dataset Links:
 ### BOLD5000_ROIs:
