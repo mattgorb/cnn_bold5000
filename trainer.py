@@ -25,6 +25,7 @@ class Trainer():
             self.fmri_data=data['fmri_data']
             self.cos=torch.nn.CosineSimilarity(dim=1, eps=1e-08)
             self.alpha_factor=.5
+            self.fmri_loss=[]
 
         if self.use_cuda:
             self.model.cuda()
@@ -45,11 +46,14 @@ class Trainer():
     def loss_fmri(self,output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2):
         loss_main=self.loss(output, target)
 
+        #cosine similarity
         model_sim=self.cos(fmri_out1, fmri_out2)
         fmri_sim=self.cos(fmri_target,fmri_target2)
 
+        #1-pearson correlation
         fmri_loss=1-audtorch.metrics.functional.pearsonr(model_sim, fmri_sim).squeeze(dim=0)
-        #print(fmri_loss)
+        self.fmri_loss.append(str(fmri_loss.item()))
+
         total_loss=loss_main+self.alpha_factor*fmri_loss
         return total_loss
 
@@ -67,7 +71,7 @@ class Trainer():
             if self.with_fmri_data:
                 fmri_data, fmri_target=self.fmri_data.get_batch()
                 fmri_data2, fmri_target2 = self.fmri_data.get_batch()
-                #break
+
                 output, fmri_out1, fmri_out2=self.model.forward_fmri(data, fmri_data, fmri_data2)
                 loss=self.loss_fmri(output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2)
 
@@ -92,6 +96,14 @@ class Trainer():
                 print('{}/{}\tLoss: {:.3f}'.format(batch_idx * len(data),
                                                   len(self.train_main.dataset),mean_loss))
                 print_every_loss = 0.
+
+        outF = open("fmri_losses.txt", "a")
+        for line in self.fmri_loss:
+            outF.write(line)
+            outF.write("\n")
+        outF.close()
+        self.fmri_loss = []
+
         # Return mean epoch loss
         return epoch_loss / len(self.train_main.dataset)
 

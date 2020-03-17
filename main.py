@@ -30,7 +30,6 @@ else:
     weight_file='cifar10_resnet50.pth'
 
 model = resnet18()
-
 if use_cuda:
     model.cuda()
 
