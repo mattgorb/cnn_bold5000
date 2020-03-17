@@ -5,9 +5,6 @@ pip install -r requirements.txt
 
 wen-add any new libraries to the requirements file
 
-
-data_analysis_initial:
-
 trying to replicate robustness paper: 
 https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines
 
