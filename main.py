@@ -36,7 +36,7 @@ if use_cuda:
 
 
 
-optimizer =optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=5e-4)# optim.Adam(model.parameters())
+optimizer =optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=.0005)# optim.Adam(model.parameters())
 loss = nn.CrossEntropyLoss()
 
 # Define trainer
