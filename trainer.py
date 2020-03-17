@@ -33,15 +33,6 @@ class Trainer():
         # Initialize attributes
         self.losses = {'loss': []}
 
-    def train(self):
-        self.batch_size = self.train_main.batch_size
-        self.model.train()
-
-        for epoch in range(self.epochs):
-            mean_epoch_loss = self.train_epoch()
-            print('Epoch: {} Average loss: {:.2f}'.format(epoch + 1, self.batch_size *  mean_epoch_loss))
-            self.test_epoch()
-
 
     def loss_fmri(self,output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2):
         loss_main=self.loss(output, target)
@@ -56,6 +47,17 @@ class Trainer():
 
         total_loss=loss_main+self.alpha_factor*fmri_loss
         return total_loss
+
+
+    def train(self):
+        self.batch_size = self.train_main.batch_size
+        self.model.train()
+
+        for epoch in range(self.epochs):
+            mean_epoch_loss = self.train_epoch()
+            print('Epoch: {} Average loss: {:.2f}'.format(epoch + 1, self.batch_size *  mean_epoch_loss))
+            self.test_epoch()
+
 
     def train_epoch(self):
         epoch_loss = 0.
