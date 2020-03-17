@@ -16,7 +16,7 @@ https://arxiv.org/pdf/1809.01281.pdf
 ##### browser:
 https://ndownloader.figshare.com/files/12965447
 ##### command line:
-https://s3-eu-west-1.amazonaws.com/pstorage-cmu-348901238291901/12965447/BOLD5000_ROIs.zip
+wget https://s3-eu-west-1.amazonaws.com/pstorage-cmu-348901238291901/12965447/BOLD5000_ROIs.zip
 
 ### BOLD5000_Stimuli:
 ##### browser:
