@@ -123,7 +123,7 @@ class Bottleneck(nn.Module):
 
 class ResNet(nn.Module):
 
-    def __init__(self, block, layers, num_classes=10, zero_init_residual=False,
+    def __init__(self, regularize_layer,block, layers, num_classes=10, zero_init_residual=False,
                  groups=1, width_per_group=64, replace_stride_with_dilation=None,
                  norm_layer=None):
         super(ResNet, self).__init__()
@@ -156,6 +156,8 @@ class ResNet(nn.Module):
                                        dilate=replace_stride_with_dilation[2])
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc = nn.Linear(512 * block.expansion, num_classes)
+
+        self.regularize_layer=regularize_layer
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -224,10 +226,22 @@ class ResNet(nn.Module):
 
         x = self.layer1(x)
         x = self.layer2(x)
-        #x = self.layer3(x)
-        #x = self.layer4(x)
-        x=torch.flatten(x,start_dim=1)
-        return x
+        if self.regularize_layer==2:
+            x = torch.flatten(x, start_dim=1)
+            return x
+
+        x = self.layer3(x)
+        if self.regularize_layer==3:
+            x = torch.flatten(x, start_dim=1)
+            return x
+
+        x = self.layer4(x)
+        if self.regularize_layer==4:
+            x = torch.flatten(x, start_dim=1)
+            return x
+
+        #x=torch.flatten(x,start_dim=1)
+        #return x
 
     def forward(self,x):
         return self._forward_impl(x)
@@ -236,23 +250,23 @@ class ResNet(nn.Module):
         return self._forward_impl(x), self._conv_activations(brain_x), self._conv_activations(brain_x2)
 
 
-def _resnet(arch, block, layers, pretrained, progress, **kwargs):
-    model = ResNet(block, layers, **kwargs)
-    if pretrained:
+def _resnet(regularize_layer,arch, block, layers, pretrained, progress, **kwargs):
+    model = ResNet(regularize_layer,block, layers, **kwargs)
+    '''if pretrained:
         state_dict = load_state_dict_from_url(model_urls[arch],
                                               progress=progress)
-        model.load_state_dict(state_dict)
+        model.load_state_dict(state_dict)'''
     return model
 
 
-def resnet18(pretrained=False, progress=True, **kwargs):
+def resnet18(regularize_layer,pretrained=False, progress=True, **kwargs):
     r"""ResNet-18 model from
     `"Deep Residual Learning for Image Recognition" <https://arxiv.org/pdf/1512.03385.pdf>`_
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    return _resnet('resnet18', BasicBlock, [2, 2, 2, 2], pretrained, progress,
+    return _resnet(regularize_layer,'resnet18', BasicBlock, [2, 2, 2, 2], pretrained, progress,
                    **kwargs)
 
 

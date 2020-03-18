@@ -7,7 +7,7 @@ from models.resnet import *
 from trainer import *
 
 batch_size = 50
-alpha=0.5
+
 
 
 
@@ -19,14 +19,16 @@ data['test_main']=cifar10_test_loader
 
 #Train with fmri data
 train_with_fmri=True
+alpha=0.2
 if train_with_fmri:
     get_bold5000_dataset = get_bold5000_dataset(batch_size)
     data['fmri_data']=get_bold5000_dataset
-    weight_file='model_weights/cifar10_resnet50_fmri.pth'
+    regularize_layer=2
+    model = resnet18(regularize_layer=regularize_layer)
+    weight_file='model_weights/cifar10_resnet50_fmri_layer'+str(regularize_layer)+'_alpha'+str(alpha)+'.pth'
 else:
     weight_file='model_weights/cifar10_resnet50.pth'
-
-model = resnet18()
+    model = resnet18()
 # Check for cuda
 use_cuda = torch.cuda.is_available()
 if use_cuda:
