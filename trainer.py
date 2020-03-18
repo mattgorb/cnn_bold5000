@@ -150,7 +150,7 @@ class Trainer():
                     test_loss += self.loss(output, target).item()
 
         if self.with_fmri_data:
-            fmri_loss_file="results/fmri_dissimilarity_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+".txt"
+            fmri_loss_file="results/fmri_dissimilarity_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+"_tanh_"+str(self.tanh_similarity)+".txt"
             if epoch > 0:
                 outF = open(fmri_loss_file, "a")
             else:
@@ -165,8 +165,8 @@ class Trainer():
 
 
         if self.with_fmri_data:
-            test_loss_file = "results/test_losses_fmri_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+".txt"
-            test_accuracy_file = "results/test_accuracy_fmri_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+".txt"
+            test_loss_file = "results/test_losses_fmri_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+"_tanh_"+str(self.tanh_similarity)+".txt"
+            test_accuracy_file = "results/test_accuracy_fmri_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+"_tanh_"+str(self.tanh_similarity)+".txt"
         else:
             test_loss_file = "results/test_losses.txt"
             test_accuracy_file = "results/test_accuracy.txt"

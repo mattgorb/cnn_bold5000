@@ -28,7 +28,7 @@ if train_with_fmri:
     tanh_similarity=True
 
     model = resnet18(regularize_layer=regularize_layer)
-    weight_file='model_weights/cifar10_resnet50_fmri_layer'+str(regularize_layer)+'_alpha'+str(alpha)+'.pth'
+    weight_file='model_weights/cifar10_resnet50_fmri_layer'+str(regularize_layer)+'_alpha'+str(alpha)+"_tanh_"+str(tanh_similarity)+'.pth'
 else:
     weight_file='model_weights/cifar10_resnet50.pth'
     model = resnet18()
