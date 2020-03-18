@@ -259,7 +259,7 @@ def _resnet(regularize_layer,arch, block, layers, pretrained, progress, **kwargs
     return model
 
 
-def resnet18(regularize_layer,pretrained=False, progress=True, **kwargs):
+def resnet18(regularize_layer=None,pretrained=False, progress=True, **kwargs):
     r"""ResNet-18 model from
     `"Deep Residual Learning for Image Recognition" <https://arxiv.org/pdf/1512.03385.pdf>`_
     Args:
