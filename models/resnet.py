@@ -240,14 +240,15 @@ class ResNet(nn.Module):
             x = torch.flatten(x, start_dim=1)
             return x
 
-        #x=torch.flatten(x,start_dim=1)
-        #return x
 
     def forward(self,x):
         return self._forward_impl(x)
 
     def forward_fmri(self,x,brain_x, brain_x2):
         return self._forward_impl(x), self._conv_activations(brain_x), self._conv_activations(brain_x2)
+
+    def forward_only_fmri(self,brain_x, brain_x2):
+        return  self._conv_activations(brain_x), self._conv_activations(brain_x2)
 
 
 def _resnet(regularize_layer,arch, block, layers, pretrained, progress, **kwargs):
