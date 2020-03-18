@@ -18,9 +18,13 @@
   <component name="ProjectId" id="1Z64nD5AqsSStP7g7Xpoh0PlaKt" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/root_django_backend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../bold5000/model_weights" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../bold5000/model_weights" />
+      <recent name="$PROJECT_DIR$/../bold5000/results" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/../bold5000/model_weights" />
       <recent name="$PROJECT_DIR$/../bold5000/models" />
@@ -97,7 +101,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1584146374417</updated>
-      <workItem from="1584146377129" duration="79423000" />
+      <workItem from="1584146377129" duration="82476000" />
     </task>
     <servers />
   </component>
