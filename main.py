@@ -19,11 +19,17 @@ data['test_main']=cifar10_test_loader
 
 #Train with fmri data
 train_with_fmri=True
-alpha=0.2
+
+
+
 if train_with_fmri:
     get_bold5000_dataset = get_bold5000_dataset(batch_size)
     data['fmri_data']=get_bold5000_dataset
-    regularize_layer=2
+
+    # Main Variables
+    alpha = 0.2
+    regularize_layer = 2
+
     model = resnet18(regularize_layer=regularize_layer)
     weight_file='model_weights/cifar10_resnet50_fmri_layer'+str(regularize_layer)+'_alpha'+str(alpha)+'.pth'
 else:
