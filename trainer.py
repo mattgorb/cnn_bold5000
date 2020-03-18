@@ -4,7 +4,7 @@ import audtorch
 
 class Trainer():
     def __init__(self, model, optimizer, loss, data, weight_file, with_fmri_data=False, print_loss_every=5, epochs=250,
-                 use_cuda=False, alpha_factor=0.5):
+                 use_cuda=False, alpha_factor=0.5,regularize_layer=None):
 
         self.model = model
         self.optimizer = optimizer
@@ -24,11 +24,13 @@ class Trainer():
         self.test_main = data['test_main']
         self.batch_size = self.train_main.batch_size
 
+
         self.with_fmri_data = with_fmri_data
         if self.with_fmri_data:
             self.fmri_data = data['fmri_data']
             self.cos = torch.nn.CosineSimilarity(dim=1, eps=1e-08)
             self.alpha_factor = alpha_factor
+            self.regularize_layer = regularize_layer
             self.fmri_loss = []
 
         if self.use_cuda:
@@ -99,10 +101,11 @@ class Trainer():
                 print_every_loss = 0.
 
         if self.with_fmri_data:
+            fmri_loss_file="results/fmri_losses_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+".txt"
             if epoch > 0:
-                outF = open("results/fmri_losses.txt", "a")
+                outF = open(fmri_loss_file, "a")
             else:
-                outF = open("results/fmri_losses.txt", "w")
+                outF = open(fmri_loss_file, "w")
 
             for line in self.fmri_loss:
                 outF.write(line)
@@ -131,8 +134,8 @@ class Trainer():
                 correct += (predicted == target).sum().item()
 
         if self.with_fmri_data:
-            test_loss_file = "results/test_losses_fmri.txt"
-            test_accuracy_file = "results/test_accuracy_fmri.txt"
+            test_loss_file = "results/test_losses_fmri_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+".txt"
+            test_accuracy_file = "results/test_accuracy_fmri_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+".txt"
         else:
             test_loss_file = "results/test_losses.txt"
             test_accuracy_file = "results/test_accuracy.txt"
