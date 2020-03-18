@@ -17,8 +17,6 @@ data['test_main']=cifar10_test_loader
 #Train with fmri data
 train_with_fmri=True
 
-
-
 if train_with_fmri:
     get_bold5000_dataset = get_bold5000_dataset(batch_size)
     data['fmri_data']=get_bold5000_dataset
@@ -27,6 +25,7 @@ if train_with_fmri:
     alpha = 0.2
     #regularize_layer={1,2,3,4}
     regularize_layer = 4
+    tanh_similarity=True
 
     model = resnet18(regularize_layer=regularize_layer)
     weight_file='model_weights/cifar10_resnet50_fmri_layer'+str(regularize_layer)+'_alpha'+str(alpha)+'.pth'
@@ -42,7 +41,7 @@ optimizer =optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=.000
 loss = nn.CrossEntropyLoss()
 
 # Define trainer
-trainer = Trainer(model, optimizer,loss,data, weight_file,with_fmri_data=train_with_fmri,use_cuda=use_cuda, alpha_factor=alpha,regularize_layer=regularize_layer)
+trainer = Trainer(model, optimizer,loss,data, weight_file,with_fmri_data=train_with_fmri,use_cuda=use_cuda, alpha_factor=alpha,regularize_layer=regularize_layer,tanh_similarity=tanh_similarity)
 
 # Train model for 250 epochs
 trainer.train()
