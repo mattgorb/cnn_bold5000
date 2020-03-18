@@ -28,7 +28,8 @@ if train_with_fmri:
 
     # Main Variables
     alpha = 0.2
-    regularize_layer = 2
+    #regularize_layer={1,2,3,4}
+    regularize_layer = 4
 
     model = resnet18(regularize_layer=regularize_layer)
     weight_file='model_weights/cifar10_resnet50_fmri_layer'+str(regularize_layer)+'_alpha'+str(alpha)+'.pth'
