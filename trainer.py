@@ -36,7 +36,7 @@ class Trainer():
         if self.use_cuda:
             self.model.cuda()
 
-    def loss_fmri(self, output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2):
+    def loss_fmri(self, output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2,log_fmri_corr=False):
         loss_main = self.loss(output, target)
 
         # cosine similarity
@@ -45,7 +45,9 @@ class Trainer():
 
         # 1-pearson correlation
         fmri_loss = 1 - audtorch.metrics.functional.pearsonr(model_sim, fmri_sim).squeeze(dim=0)
-        self.fmri_loss.append(str(fmri_loss.item()))
+
+        if log_fmri_corr:
+            self.fmri_loss.append(str(fmri_loss.item()))
 
         total_loss = loss_main + self.alpha_factor * fmri_loss
         return total_loss
@@ -100,18 +102,7 @@ class Trainer():
                                                    len(self.train_main.dataset), mean_loss))
                 print_every_loss = 0.
 
-        if self.with_fmri_data:
-            fmri_loss_file="results/fmri_losses_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+".txt"
-            if epoch > 0:
-                outF = open(fmri_loss_file, "a")
-            else:
-                outF = open(fmri_loss_file, "w")
 
-            for line in self.fmri_loss:
-                outF.write(line)
-                outF.write("\n")
-            outF.close()
-            self.fmri_loss = []
 
         # Return mean epoch loss
         return epoch_loss / len(self.train_main.dataset)
@@ -127,11 +118,41 @@ class Trainer():
                     data, target = data.cuda(), target.cuda()
                 output = self.model(data)
 
-                test_loss += self.loss(output, target).item()
+
 
                 _, predicted = torch.max(output.data, 1)
                 total += target.size(0)
                 correct += (predicted == target).sum().item()
+
+                if self.with_fmri_data:
+                    fmri_data, fmri_target = self.fmri_data.get_batch()
+                    fmri_data2, fmri_target2 = self.fmri_data.get_batch()
+
+                    if self.use_cuda:
+                        fmri_data, fmri_target, fmri_data2, fmri_target2 = fmri_data.cuda(), fmri_target.cuda(), fmri_data2.cuda(), fmri_target2.cuda()
+
+                    output, fmri_out1, fmri_out2 = self.model.forward_fmri(data, fmri_data, fmri_data2)
+                    loss = self.loss_fmri(output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2, log_fmri_corr=True)
+
+                    test_loss += self.loss(output, target).item()
+
+                else:
+                    test_loss += self.loss(output, target).item()
+
+        if self.with_fmri_data:
+            fmri_loss_file="results/fmri_dissimilarity_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+".txt"
+            if epoch > 0:
+                outF = open(fmri_loss_file, "a")
+            else:
+                outF = open(fmri_loss_file, "w")
+
+            for line in self.fmri_loss:
+                outF.write(line)
+                outF.write("\n")
+            outF.close()
+            self.fmri_loss = []
+
+
 
         if self.with_fmri_data:
             test_loss_file = "results/test_losses_fmri_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+".txt"
