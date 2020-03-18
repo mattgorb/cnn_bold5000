@@ -72,7 +72,7 @@ plt.plot([i for i in noise], [i for i in layer2], linestyle='--', label='Layer 2
 plt.plot([i for i in noise], [i for i in layer4], linestyle='--', label='Layer 4 reg')
 
 plt.legend(loc='upper right', framealpha=1, frameon=True)
-plt.savefig('results/robustness.png')
+plt.savefig('visuals/robustness.png')
 
 
 
@@ -95,5 +95,5 @@ plt.plot([i for i in range(len(layer_2))], [i for i in layer_2],marker='.', line
 plt.plot([i for i in range(len(layer_4))], [i for i in layer_4],marker='.', linestyle='None', label='Layer 4 regularized')
 
 plt.legend(loc='upper right', framealpha=1, frameon=True)
-plt.savefig('results/regularization.png')
+plt.savefig('visuals/regularization.png')
 #plt.show()
