@@ -123,7 +123,7 @@ class Bottleneck(nn.Module):
 
 class ResNet(nn.Module):
 
-    def __init__(self, regularize_layer,block, layers, num_classes=10, zero_init_residual=False,
+    def __init__(self, block, layers,regularize_layer=None, num_classes=10, zero_init_residual=False,
                  groups=1, width_per_group=64, replace_stride_with_dilation=None,
                  norm_layer=None):
         super(ResNet, self).__init__()
@@ -251,7 +251,7 @@ class ResNet(nn.Module):
 
 
 def _resnet(regularize_layer,arch, block, layers, pretrained, progress, **kwargs):
-    model = ResNet(regularize_layer,block, layers, **kwargs)
+    model = ResNet(block, layers,regularize_layer, **kwargs)
     '''if pretrained:
         state_dict = load_state_dict_from_url(model_urls[arch],
                                               progress=progress)

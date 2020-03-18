@@ -28,7 +28,7 @@ if train_with_fmri:
     weight_file='model_weights/cifar10_resnet50_fmri_layer'+str(regularize_layer)+'_alpha'+str(alpha)+'.pth'
 else:
     weight_file='model_weights/cifar10_resnet50.pth'
-    model = resnet18()
+    model = resnet18(regularize_layer=None)
 # Check for cuda
 use_cuda = torch.cuda.is_available()
 if use_cuda:
