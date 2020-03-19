@@ -3,7 +3,7 @@ import audtorch
 
 
 class Trainer():
-    def __init__(self, model, optimizer, loss, data, weight_file, regularize_with_fmri_data=False, print_loss_every=5, epochs=250,
+    def __init__(self, model, optimizer, loss, data, weight_file, regularize_with_fmri_data=False, print_loss_every=100, epochs=250,
                  use_cuda=False, alpha_factor=0.5,regularize_layer=None):
 
         self.model = model

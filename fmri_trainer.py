@@ -3,7 +3,7 @@ import audtorch
 
 
 class FMRITrainer():
-    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=5, epochs=250,
+    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=250,
                  use_cuda=False, regularize_layer=None,tanh_similarity=False):
 
         self.model = model
@@ -32,8 +32,8 @@ class FMRITrainer():
 
     def loss_plus_fmri(self, fmri_out1, fmri_target, fmri_out2, fmri_target2,log_fmri_corr=False):
 
-        def atanh(x):
-            return 0.5 * torch.log((1 + x) / (1 - x))
+        def atanh(x, eps=1e-5):
+            return 0.5 * torch.log((1 + x + eps) / (1 - x + eps))
 
         # cosine similarity
         model_sim = self.cos(fmri_out1, fmri_out2)
