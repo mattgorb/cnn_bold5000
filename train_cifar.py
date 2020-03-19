@@ -22,7 +22,7 @@ data['train_main'] = cifar10_train_loader
 data['test_main'] = cifar10_test_loader
 
 weight_file='model_weights/resnet50_fmri_only_layer_4_random_False.pth'
-#weight_file='model_weights/resnet50_fmri_only_layer_4_random_True.pth'
+weight_file='model_weights/resnet50_fmri_only_layer_4_random_True.pth'
 
 model = resnet18()
 use_cuda = torch.cuda.is_available()
@@ -35,8 +35,8 @@ model.load_state_dict(network_state_dict)
 optimizer =optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=.0005)# optim.Adam(model.parameters())
 loss = nn.CrossEntropyLoss()
 
-loss_file="results/test_losses_fmri_false_layer_4.txt"
-accuracy_file="results/test_losses_fmri_false_layer_4.txt"
+loss_file="results/test_losses_fmri_true_layer_4.txt"
+accuracy_file="results/test_losses_fmri_true_layer_4.txt"
 
 # Define trainer
 trainer = Trainer(model, optimizer,loss,data, weight_file,
