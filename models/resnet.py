@@ -255,7 +255,6 @@ class ResNet(nn.Module):
         x = self.fc2(x)
         return x
 
-
     def forward(self,x):
         return self._forward_impl(x)
 
