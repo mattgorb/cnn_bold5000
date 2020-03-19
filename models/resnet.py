@@ -244,7 +244,12 @@ class ResNet(nn.Module):
 
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
-        x = self.fc1(x)
+
+        if self.regularize_layer=='fc1':
+            x = torch.flatten(x, start_dim=1)
+            return x
+
+        x = self.fc2(x)
         return x
 
 

@@ -19,8 +19,8 @@ if only_fmri:
     get_bold5000_dataset = get_bold5000_dataset(batch_size)
     data['fmri_data'] = get_bold5000_dataset
 
-    # regularize_layer={1,2,3,4,fc1}
-    regularize_layer = 'fc1'
+    # regularize_layer={1,2,3,4,fc1,fc2}
+    regularize_layer = 'fc2'
 
     random=True
 
