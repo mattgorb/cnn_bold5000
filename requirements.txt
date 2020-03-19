@@ -2,4 +2,3 @@ scikit-image
 torchvision
 torch
 h5py
-audtorch

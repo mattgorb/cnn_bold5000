@@ -22,11 +22,8 @@ if only_fmri:
     # regularize_layer={1,2,3,4}
     regularize_layer = 4
 
-    #False is pearson correlation
-    tanh_similarity = True
-
     model = resnet18(regularize_layer=regularize_layer)
-    weight_file = 'model_weights/resnet50_fmri_only_layer_' + str(regularize_layer) +  "_tanh_" + str(tanh_similarity) + '.pth'
+    weight_file = 'model_weights/resnet50_fmri_only_layer_' + str(regularize_layer) + '.pth'
 
     # Check for cuda
     use_cuda = torch.cuda.is_available()
@@ -40,8 +37,7 @@ if only_fmri:
     # Define trainer
     trainer = FMRITrainer(model, optimizer,loss,data, weight_file,
                       use_cuda=use_cuda,
-                      regularize_layer=regularize_layer,
-                      tanh_similarity=tanh_similarity, only_fmri=only_fmri)
+                      regularize_layer=regularize_layer)
 
 else:
     '''
@@ -64,10 +60,9 @@ else:
         alpha = 0.2
         #regularize_layer={1,2,3,4}
         regularize_layer = 4
-        tanh_similarity=True
 
         model = resnet18(regularize_layer=regularize_layer)
-        weight_file='model_weights/cifar10_resnet50_fmri_layer'+str(regularize_layer)+'_alpha'+str(alpha)+"_tanh_"+str(tanh_similarity)+'.pth'
+        weight_file='model_weights/cifar10_resnet50_fmri_layer'+str(regularize_layer)+'_alpha'+str(alpha)+'.pth'
     else:
         #train normally
         weight_file='model_weights/cifar10_resnet50.pth'
@@ -87,8 +82,7 @@ else:
     # Define trainer
     trainer = Trainer(model, optimizer,loss,data, weight_file,
                       regularize_with_fmri_data=regularize_with_fmri_data,use_cuda=use_cuda,
-                      alpha_factor=alpha,regularize_layer=regularize_layer,
-                      tanh_similarity=tanh_similarity, only_fmri=only_fmri)
+                      alpha_factor=alpha,regularize_layer=regularize_layer)
 
 # Train model for 250 epochs
 trainer.train()

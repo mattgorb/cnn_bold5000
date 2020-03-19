@@ -4,7 +4,7 @@ import audtorch
 
 class Trainer():
     def __init__(self, model, optimizer, loss, data, weight_file, regularize_with_fmri_data=False, print_loss_every=5, epochs=250,
-                 use_cuda=False, alpha_factor=0.5,regularize_layer=None,tanh_similarity=False):
+                 use_cuda=False, alpha_factor=0.5,regularize_layer=None):
 
         self.model = model
         self.optimizer = optimizer
@@ -32,7 +32,7 @@ class Trainer():
             self.cos = torch.nn.CosineSimilarity(dim=1, eps=1e-08)
             self.alpha_factor = alpha_factor
             self.regularize_layer = regularize_layer
-            self.tanh_similarity=tanh_similarity
+
             self.fmri_loss = []
 
         if self.use_cuda:
@@ -49,13 +49,12 @@ class Trainer():
         model_sim = self.cos(fmri_out1, fmri_out2)
         fmri_sim = self.cos(fmri_target, fmri_target2)
 
-        if self.tanh_similarity:
-            #similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
-            fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2)
-        else:
-            # 1-pearson correlation
-            fmri_loss = 1 - audtorch.metrics.functional.pearsonr(model_sim, fmri_sim).squeeze(dim=0)
 
+        #similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
+        fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).sum()
+
+        # 1-pearson correlation
+        #fmri_loss = 1 - audtorch.metrics.functional.pearsonr(model_sim, fmri_sim).squeeze(dim=0)
 
         if log_fmri_corr:
             self.fmri_loss.append(str(fmri_loss.item()))
