@@ -51,7 +51,7 @@ class Trainer():
 
 
         #similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
-        fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).sum()
+        fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).mean()
 
         print(fmri_loss)
 
