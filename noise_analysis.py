@@ -9,9 +9,6 @@ batch_size = 50
 # Load data
 cifar10_train_loader, cifar10_test_loader = get_cifar_dataloaders(batch_size=batch_size)
 
-''''''
-
-
 
 
 def get_noise_on_test(weight_file, noise):

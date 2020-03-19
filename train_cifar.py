@@ -21,14 +21,22 @@ data={}
 data['train_main'] = cifar10_train_loader
 data['test_main'] = cifar10_test_loader
 
-random=True
+'''
 weight_file='model_weights/resnet50_fmri_only_layer_4_random_False.pth'
 loss_file="results/test_losses_fmri_false_layer_4.txt"
 accuracy_file="results/test_losses_fmri_false_layer_4.txt"
 
-#weight_file='model_weights/resnet50_fmri_only_layer_4_random_True.pth'
-#loss_file="results/test_losses_fmri_true_layer_4.txt"
-#accuracy_file="results/test_losses_fmri_true_layer_4.txt"
+weight_file='model_weights/resnet50_fmri_only_layer_4_random_True.pth'
+loss_file="results/test_losses_fmri_true_layer_4.txt"
+accuracy_file="results/test_losses_fmri_true_layer_4.txt"'''
+
+weight_file='model_weights/resnet50_fmri_only_layer_2_random_False.pth'
+loss_file="results/test_losses_fmri_false_layer_2.txt"
+accuracy_file="results/test_losses_fmri_false_layer_2.txt"
+
+#weight_file='model_weights/resnet50_fmri_only_layer_2_random_True.pth'
+#loss_file="results/test_losses_fmri_true_layer_2.txt"
+#accuracy_file="results/test_losses_fmri_true_layer_2.txt"
 
 model = resnet18()
 use_cuda = torch.cuda.is_available()
