@@ -42,7 +42,7 @@ accuracy_file="results/test_losses_fmri_true_layer_4.txt"
 trainer = Trainer(model, optimizer,loss,data, weight_file,
                   regularize_with_fmri_data=False,use_cuda=use_cuda,
                   alpha_factor=0,regularize_layer=None,
-                  fmri_weights={'loss_file': loss_file,'accuracy_file':accuracy_file})
+                  fmri_weight_file_names={'loss_file': loss_file,'accuracy_file':accuracy_file})
 
 # Train model for 250 epochs
 trainer.train()
