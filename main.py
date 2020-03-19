@@ -22,7 +22,8 @@ if only_fmri:
     # regularize_layer={1,2,3,4}
     regularize_layer = 4
 
-    random=False
+    random=True
+
 
     model = resnet18(regularize_layer=regularize_layer)
     weight_file = 'model_weights/resnet50_fmri_only_layer_' + str(regularize_layer) + '_random_'+str(random)+'.pth'
