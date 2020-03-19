@@ -79,7 +79,6 @@ class FMRIOnlyTrainer():
                 fmri_target=torch.rand_like(fmri_target)
                 fmri_target2=torch.rand_like(fmri_target2)
 
-            print(fmri_target.size())
 
             if self.use_cuda:
                 fmri_data, fmri_target,fmri_data2, fmri_target2 = fmri_data.cuda(), fmri_target.cuda(),fmri_data2.cuda(), fmri_target2.cuda()
