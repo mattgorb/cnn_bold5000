@@ -68,7 +68,7 @@ class FMRIOnlyTrainer():
         self.model.train()
 
         #for batch_idx, (data, target) in enumerate(self.train_main):
-        for batch_idx in range(10000):#int(len(self.fmri_data.imagenet_idxs)/self.batch_size)):
+        for batch_idx in range(int(len(self.fmri_data.imagenet_idxs)/self.batch_size)):#:
 
             self.optimizer.zero_grad()
 
@@ -100,7 +100,7 @@ class FMRIOnlyTrainer():
                 else:
                     mean_loss = print_every_loss / self.print_loss_every
                 print('{}/{}\tLoss: {:.3f}'.format(batch_idx ,
-                                                   10000, mean_loss))
+                                                   int(len(self.fmri_data.imagenet_idxs)/self.batch_size), mean_loss))
                 print_every_loss = 0.
 
         fmri_loss_file="results/fmri_only_dissimilarity_layer_"+str(self.regularize_layer)+".txt"
