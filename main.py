@@ -22,7 +22,7 @@ if only_fmri:
     # regularize_layer={1,2,3,4,fc1,fc2}
     regularize_layer = 'fc1'
 
-    random=True
+    random=False
 
 
     model = resnet18(regularize_layer=regularize_layer)
