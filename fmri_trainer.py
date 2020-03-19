@@ -30,7 +30,7 @@ class FMRITrainer():
         if self.use_cuda:
             self.model.cuda()
 
-    def loss_plus_fmri(self, fmri_out1, fmri_target, fmri_out2, fmri_target2,log_fmri_corr=False):
+    def loss_fmri(self, fmri_out1, fmri_target, fmri_out2, fmri_target2,log_fmri_corr=False):
 
         def atanh(x, eps=1e-5):
             return 0.5 * torch.log((1 + x + eps) / (1 - x + eps))
