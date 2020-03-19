@@ -10,7 +10,7 @@ from fmri_trainer import *
 batch_size = 50
 data={}
 
-only_fmri=True
+only_fmri=False
 
 if only_fmri:
     '''
