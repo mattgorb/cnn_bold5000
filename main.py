@@ -20,7 +20,7 @@ if only_fmri:
     data['fmri_data'] = get_bold5000_dataset
 
     # regularize_layer={1,2,3,4,fc1,fc2}
-    regularize_layer = 'fc2'
+    regularize_layer = 'fc1'
 
     random=True
 
