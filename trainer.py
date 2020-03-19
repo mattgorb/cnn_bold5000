@@ -4,7 +4,7 @@ import audtorch
 
 class Trainer():
     def __init__(self, model, optimizer, loss, data, weight_file, regularize_with_fmri_data=False, print_loss_every=100, epochs=250,
-                 use_cuda=False, alpha_factor=0.5,regularize_layer=None):
+                 use_cuda=False, alpha_factor=0.5,regularize_layer=None, fmri_weight_file_names=None):
 
         self.model = model
         self.optimizer = optimizer
@@ -24,7 +24,7 @@ class Trainer():
         self.test_main = data['test_main']
         self.batch_size = self.train_main.batch_size
 
-
+        self.fmri_weights=fmri_weights
 
         self.regularize_with_fmri_data = regularize_with_fmri_data
         if self.regularize_with_fmri_data:
@@ -161,14 +161,15 @@ class Trainer():
             outF.close()
             self.fmri_loss = []
 
-
-
-        if self.regularize_with_fmri_data:
             test_loss_file = "results/test_losses_fmri_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+".txt"
             test_accuracy_file = "results/test_accuracy_fmri_layer_"+str(self.regularize_layer)+'_alpha_'+str(self.alpha_factor)+".txt"
         else:
-            test_loss_file = "results/test_losses.txt"
-            test_accuracy_file = "results/test_accuracy.txt"
+            if self.fmri_weight_file_names is not None:
+                test_loss_file = self.fmri_weight_file_names['loss_file']
+                test_accuracy_file = self.fmri_weight_file_names['accuracy_file']
+            else:
+                test_loss_file = "results/test_losses.txt"
+                test_accuracy_file = "results/test_accuracy.txt"
 
         if epoch > 0:
             outF = open(test_loss_file, "a")

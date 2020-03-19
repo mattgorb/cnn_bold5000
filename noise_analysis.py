@@ -9,7 +9,7 @@ batch_size = 50
 # Load data
 cifar10_train_loader, cifar10_test_loader = get_cifar_dataloaders(batch_size=batch_size)
 
-'''
+''''''
 
 
 
@@ -74,7 +74,7 @@ plt.plot([i for i in noise], [i for i in layer4], linestyle='--', label='Layer 4
 plt.legend(loc='upper right', framealpha=1, frameon=True)
 plt.savefig('visuals/robustness.png')
 
-'''
+
 
 f = open('results/fmri_dissimilarity_layer_2_alpha_0.2.txt', 'r')
 layer_2 = f.readlines()
