@@ -3,7 +3,7 @@ import audtorch
 
 
 class FMRITrainer():
-    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=250,
+    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=50,
                  use_cuda=False, regularize_layer=None):
 
         self.model = model
