@@ -100,7 +100,7 @@ class FMRIOnlyTrainer():
                 else:
                     mean_loss = print_every_loss / self.print_loss_every
                 print('{}/{}\tLoss: {:.3f}'.format(batch_idx ,
-                                                   int(len(self.fmri_data.imagenet_idxs)/self.batch_size), mean_loss))
+                                                   10000, mean_loss))
                 print_every_loss = 0.
 
         fmri_loss_file="results/fmri_only_dissimilarity_layer_"+str(self.regularize_layer)+".txt"
@@ -116,6 +116,7 @@ class FMRIOnlyTrainer():
         self.fmri_loss = []
 
         torch.save(self.model.state_dict(), self.weight_file)
+        sys.exit()
 
         # Return mean epoch loss
         return epoch_loss / len(self.fmri_data.imagenet_idxs)
