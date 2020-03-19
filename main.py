@@ -57,7 +57,7 @@ else:
         data['fmri_data']=get_bold5000_dataset
 
         # Main Variables
-        alpha = 0.2
+        alpha = 0.05
         #regularize_layer={1,2,3,4}
         regularize_layer = 4
 
