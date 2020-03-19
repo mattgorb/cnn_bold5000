@@ -4,7 +4,7 @@ import audtorch
 
 class FMRITrainer():
     def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=250,
-                 use_cuda=False, regularize_layer=None,tanh_similarity=False):
+                 use_cuda=False, regularize_layer=None):
 
         self.model = model
         self.optimizer = optimizer
@@ -96,7 +96,7 @@ class FMRITrainer():
                                                    int(len(self.fmri_data.imagenet_idxs)/self.batch_size), mean_loss))
                 print_every_loss = 0.
 
-        fmri_loss_file="results/fmri_only_dissimilarity_layer_"+str(self.regularize_layer)+"_tanh_"+str(self.tanh_similarity)+".txt"
+        fmri_loss_file="results/fmri_only_dissimilarity_layer_"+str(self.regularize_layer)+".txt"
         if epoch > 0:
             outF = open(fmri_loss_file, "a")
         else:
