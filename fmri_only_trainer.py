@@ -68,7 +68,7 @@ class FMRIOnlyTrainer():
         self.model.train()
 
         #for batch_idx, (data, target) in enumerate(self.train_main):
-        for batch_idx in range(int(len(self.fmri_data.imagenet_idxs)/self.batch_size)):
+        for batch_idx in range(10000):#int(len(self.fmri_data.imagenet_idxs)/self.batch_size)):
 
             self.optimizer.zero_grad()
 
@@ -78,6 +78,8 @@ class FMRIOnlyTrainer():
             if self.random:
                 fmri_target=torch.rand_like(fmri_target)
                 fmri_target2=torch.rand_like(fmri_target2)
+
+            print(fmri_target.size())
 
             if self.use_cuda:
                 fmri_data, fmri_target,fmri_data2, fmri_target2 = fmri_data.cuda(), fmri_target.cuda(),fmri_data2.cuda(), fmri_target2.cuda()
