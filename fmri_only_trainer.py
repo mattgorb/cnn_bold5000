@@ -116,7 +116,7 @@ class FMRIOnlyTrainer():
         self.fmri_loss = []
 
         torch.save(self.model.state_dict(), self.weight_file)
-        sys.exit()
+
 
         # Return mean epoch loss
         return epoch_loss / len(self.fmri_data.imagenet_idxs)
