@@ -24,7 +24,7 @@ class Trainer():
         self.test_main = data['test_main']
         self.batch_size = self.train_main.batch_size
 
-        self.fmri_weights=fmri_weights
+        self.fmri_weight_file_names=fmri_weight_file_names
 
         self.regularize_with_fmri_data = regularize_with_fmri_data
         if self.regularize_with_fmri_data:
