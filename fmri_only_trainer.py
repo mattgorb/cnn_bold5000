@@ -4,7 +4,7 @@ import audtorch
 
 class FMRIOnlyTrainer():
     def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=50,
-                 use_cuda=False, regularize_layer=None):
+                 use_cuda=False, regularize_layer=None, random=False):
 
         self.model = model
         self.optimizer = optimizer
@@ -26,6 +26,8 @@ class FMRIOnlyTrainer():
         self.cos = torch.nn.CosineSimilarity(dim=1, eps=1e-08)
         self.regularize_layer = regularize_layer
         self.fmri_loss = []
+
+        self.random=random
 
         if self.use_cuda:
             self.model.cuda()
@@ -73,6 +75,10 @@ class FMRIOnlyTrainer():
             fmri_data, fmri_target = self.fmri_data.get_batch()
             fmri_data2, fmri_target2 = self.fmri_data.get_batch()
 
+            if self.random:
+                fmri_target=torch.rand_like(fmri_target)
+                fmri_target2=torch.rand_like(fmri_target2)
+
             if self.use_cuda:
                 fmri_data, fmri_target,fmri_data2, fmri_target2 = fmri_data.cuda(), fmri_target.cuda(),fmri_data2.cuda(), fmri_target2.cuda()
 
@@ -107,6 +113,8 @@ class FMRIOnlyTrainer():
             outF.write("\n")
         outF.close()
         self.fmri_loss = []
+
+        torch.save(self.model.state_dict(), self.weight_file)
 
         # Return mean epoch loss
         return epoch_loss / len(self.fmri_data.imagenet_idxs)

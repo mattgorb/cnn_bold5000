@@ -22,8 +22,10 @@ if only_fmri:
     # regularize_layer={1,2,3,4}
     regularize_layer = 4
 
+    random=False
+
     model = resnet18(regularize_layer=regularize_layer)
-    weight_file = 'model_weights/resnet50_fmri_only_layer_' + str(regularize_layer) + '.pth'
+    weight_file = 'model_weights/resnet50_fmri_only_layer_' + str(regularize_layer) + '_random_'+str(random)+'.pth'
 
     # Check for cuda
     use_cuda = torch.cuda.is_available()
@@ -37,7 +39,8 @@ if only_fmri:
     # Define trainer
     trainer = FMRIOnlyTrainer(model, optimizer,loss,data, weight_file,
                       use_cuda=use_cuda,
-                      regularize_layer=regularize_layer)
+                      regularize_layer=regularize_layer,
+                              random=random)
 
 else:
     '''
