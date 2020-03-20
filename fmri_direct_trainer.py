@@ -43,7 +43,7 @@ class FMRIDirectTrainer():
         #criterion = nn.MSELoss()
         #fmri_loss =criterion(fmri_out1.double(), fmri_target.double())
         #fmri_loss =1- torch.abs(self.cos(fmri_out1, fmri_target)).mean()
-        fmri_loss = (atanh(fmri_out1) - atanh(fmri_target)).pow(2).sum()
+        fmri_loss = (atanh(fmri_out1) - atanh(fmri_target)).pow(2).mean()
 
 
         #similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
