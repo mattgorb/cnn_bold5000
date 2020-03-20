@@ -40,13 +40,14 @@ class FMRIDirectTrainer():
             return 0.5 * torch.log((1 + x + eps) / (1 - x + eps))
 
         # cosine similarity
-        criterion = nn.MSELoss()
-        fmri_loss =criterion(fmri_out1.double(), fmri_target.double())
+        #criterion = nn.MSELoss()
+        #fmri_loss =criterion(fmri_out1.double(), fmri_target.double())
         #fmri_loss =1- torch.abs(self.cos(fmri_out1, fmri_target)).mean()
+        fmri_loss = (atanh(fmri_out1) - atanh(fmri_target)).pow(2).sum()
 
 
         #similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
-        #fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).mean()
+        #fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).sum()
 
         # 1-pearson correlation
         #fmri_loss = 1 - audtorch.metrics.functional.pearsonr(model_sim, fmri_sim).squeeze(dim=0)
