@@ -191,5 +191,5 @@ class Trainer():
         if correct / total > self.accuracy:
             print('Saving weights...')
             self.accuracy = (correct / total)
-            torch.save(self.model.state_dict(), self.weight_file)
+            #torch.save(self.model.state_dict(), self.weight_file)
 
