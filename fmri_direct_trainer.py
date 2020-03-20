@@ -148,6 +148,6 @@ class FMRIDirectTrainer():
 
             fmri_out1 = self.model.forward_single_fmri(fmri_data)
 
-            #print(fmri_out1[0])
-            #print(fmri_target[0])
+            print(fmri_out1[0])
+            print(fmri_target[0])
             #loss = self.loss_fmri( fmri_out1, fmri_target,log_fmri_corr=True)
