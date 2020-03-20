@@ -2,7 +2,7 @@ import torch
 import audtorch
 import torch.nn as nn
 
-class FMRIOnlyTrainer():
+class FMRIDirectTrainer():
     def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=500,
                  use_cuda=False, regularize_layer=None, random=False):
 
@@ -33,17 +33,20 @@ class FMRIOnlyTrainer():
         if self.use_cuda:
             self.model.cuda()
 
-    def loss_fmri(self, fmri_out1, fmri_target, fmri_out2, fmri_target2,log_fmri_corr=False):
+    def loss_fmri(self, fmri_out1, fmri_target,log_fmri_corr=False):
 
         def atanh(x, eps=1e-5):
             return 0.5 * torch.log((1 + x + eps) / (1 - x + eps))
 
         # cosine similarity
-        model_sim = self.cos(fmri_out1, fmri_out2)
-        fmri_sim = self.cos(fmri_target, fmri_target2)
+        fmri_loss =1- torch.abs(self.cos(fmri_out1, fmri_target)).mean()
+        #sprint()
+        #print(torch.abs(self.cos(fmri_out1, fmri_target)).mean())
+        #print(fmri_loss)
+
 
         #similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
-        fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).mean()
+        #fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).mean()
 
         # 1-pearson correlation
         #fmri_loss = 1 - audtorch.metrics.functional.pearsonr(model_sim, fmri_sim).squeeze(dim=0)
@@ -69,26 +72,23 @@ class FMRIOnlyTrainer():
         print_every_loss = 0.
         self.model.train()
 
-        #for batch_idx, (data, target) in enumerate(self.train_main):
-        for batch_idx in range(int(len(self.fmri_data.imagenet_idxs)/self.batch_size)):#:
+        for batch_idx in range(int(len(self.fmri_data.imagenet_idxs)/self.batch_size)):
 
             self.optimizer.zero_grad()
 
             fmri_data, fmri_target = self.fmri_data.get_batch()
-            fmri_data2, fmri_target2 = self.fmri_data.get_batch()
 
 
             if self.random:
                 fmri_target=torch.rand_like(fmri_target)
-                fmri_target2=torch.rand_like(fmri_target2)
 
 
             if self.use_cuda:
-                fmri_data, fmri_target,fmri_data2, fmri_target2 = fmri_data.cuda(), fmri_target.cuda(),fmri_data2.cuda(), fmri_target2.cuda()
+                fmri_data, fmri_target = fmri_data.cuda(), fmri_target.cuda()
 
-            fmri_out1, fmri_out2 = self.model.forward_only_fmri(fmri_data, fmri_data2)
+            fmri_out1 = self.model.forward_single_fmri(fmri_data)
 
-            loss = self.loss_fmri( fmri_out1, fmri_target, fmri_out2, fmri_target2,log_fmri_corr=True)
+            loss = self.loss_fmri( fmri_out1, fmri_target,log_fmri_corr=True)
 
             loss.backward()
             self.optimizer.step()

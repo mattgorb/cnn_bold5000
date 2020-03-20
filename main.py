@@ -6,6 +6,7 @@ from dataloaders.cifar10_dataloaders import *
 from models.resnet import *
 from trainer import *
 from fmri_only_trainer import *
+from fmri_direct_trainer import FMRIDirectTrainer
 
 batch_size = 50
 data={}
@@ -36,9 +37,14 @@ if only_fmri:
     loss = nn.CrossEntropyLoss()
 
     # Define trainer
-    trainer = FMRIOnlyTrainer(model, optimizer,loss,data, weight_file,
+    '''trainer = FMRIOnlyTrainer(model, optimizer,loss,data, weight_file,
                       use_cuda=use_cuda,
                       regularize_layer=regularize_layer,
+                      random=random)'''
+
+    trainer = FMRIDirectTrainer(model, optimizer, loss, data, weight_file,
+                              use_cuda=use_cuda,
+                              regularize_layer=regularize_layer,
                               random=random)
 
 else:

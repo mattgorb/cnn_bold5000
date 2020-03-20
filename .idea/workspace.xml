@@ -18,7 +18,7 @@
   <component name="ProjectId" id="1Z64nD5AqsSStP7g7Xpoh0PlaKt" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../bold5000/model_weights" />
+    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/mjml" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -102,7 +102,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1584146374417</updated>
-      <workItem from="1584146377129" duration="126492000" />
+      <workItem from="1584146377129" duration="132139000" />
     </task>
     <servers />
   </component>

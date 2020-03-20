@@ -28,7 +28,9 @@ class Bold5000(Dataset):
         f = open(stim_list_dir, 'r')
         self.CSI01_stim_lists = f.read().splitlines()
         f.close()
+
         self.imagenet_idxs=[i for i, x in enumerate(self.CSI01_stim_lists) if x.startswith('n0') or x.startswith('n1')]
+
 
 
     def __len__(self):
@@ -48,6 +50,7 @@ class Bold5000(Dataset):
             sample = self.transform(sample)
 
         target=self.target_data[idx]
+
         return sample,torch.from_numpy(target), idx
 
     def get_random_idxs(self):

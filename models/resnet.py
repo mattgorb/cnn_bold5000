@@ -266,6 +266,9 @@ class ResNet(nn.Module):
     def forward_only_fmri(self,brain_x, brain_x2):
         return  self._conv_activations(brain_x), self._conv_activations(brain_x2)
 
+    def forward_single_fmri(self,brain_x):
+        return  self._conv_activations(brain_x)
+
 
 def _resnet(regularize_layer,arch, block, layers, pretrained, progress, **kwargs):
     model = ResNet(block, layers,regularize_layer, **kwargs)
