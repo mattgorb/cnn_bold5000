@@ -1,6 +1,7 @@
 import torch
 import audtorch
 import torch.nn as nn
+import torch.nn.functional as F
 
 class FMRIDirectTrainer():
     def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=500,
@@ -39,12 +40,13 @@ class FMRIDirectTrainer():
             return 0.5 * torch.log((1 + x + eps) / (1 - x + eps))
 
         # cosine similarity
-        fmri_loss =1- torch.abs(self.cos(fmri_out1, fmri_target)).mean()
-        #sprint()
-        #print(torch.abs(self.cos(fmri_out1, fmri_target)).mean())
+        criterion = nn.MSELoss()
+        fmri_loss =criterion(fmri_out1, fmri_target)
+        #fmri_loss =1- torch.abs(self.cos(fmri_out1, fmri_target)).mean()
+
         #print(fmri_loss)
 
-
+        #sys.exit()
         #similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
         #fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).mean()
 
@@ -146,6 +148,6 @@ class FMRIDirectTrainer():
 
             fmri_out1 = self.model.forward_single_fmri(fmri_data)
 
-            print(fmri_out1[0])
-            print(fmri_target[0])
+            #print(fmri_out1[0])
+            #print(fmri_target[0])
             #loss = self.loss_fmri( fmri_out1, fmri_target,log_fmri_corr=True)
