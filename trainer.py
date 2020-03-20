@@ -23,10 +23,6 @@ class Trainer():
         self.train_main = data['train_main']
         self.test_main = data['test_main']
 
-        #remove
-        self.fmri_data = data['fmri_data']
-        self.regularize_layer = regularize_layer
-
 
         self.batch_size = self.train_main.batch_size
 
@@ -98,52 +94,6 @@ class Trainer():
 
 
             else:
-                #temp
-                network_state_dict = torch.load(self.weight_file,map_location = torch.device('cpu'))
-                self.model.load_state_dict(network_state_dict)
-                print(self.regularize_layer)
-                fmri_data, fmri_target = self.fmri_data.get_batch()
-                fmri_data2, fmri_target2 = self.fmri_data.get_batch()
-
-                x,y,z=self.model.forward_fmri(data, fmri_data, fmri_data2)
-
-                def atanh(x, eps=1e-5):
-                    return 0.5 * torch.log((1 + x + eps) / (1 - x + eps))
-
-
-                # cosine similarity
-                self.cos = torch.nn.CosineSimilarity(dim=1, eps=1e-08)
-                model_sim = self.cos(y, z)
-                fmri_sim = self.cos(fmri_target, fmri_target2)
-
-                print(model_sim)
-                print(fmri_sim)
-
-                # similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
-                fmri_loss = (atanh(model_sim) - atanh(fmri_sim)).pow(2).mean()
-                print(fmri_loss)
-
-                sys.exit()
-                print(x[0])
-                print(target[0])
-
-                '''print(fmri_target[0])
-                print(fmri_target.size())
-                print(y)
-                print(y.size())'''
-
-                import numpy as np
-                print(np.max(y.detach().numpy()))
-                print(np.mean(y.detach().numpy()))
-                print(np.min(y.detach().numpy()))
-                print(np.max(fmri_target.numpy()))
-                print(np.mean(fmri_target.numpy()))
-                print(np.min(fmri_target.numpy()))
-                sys.exit()
-
-
-
-
                 output = self.model(data)
                 loss = self.loss(output, target)
 
