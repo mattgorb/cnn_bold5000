@@ -41,12 +41,10 @@ class FMRIDirectTrainer():
 
         # cosine similarity
         criterion = nn.MSELoss()
-        fmri_loss =criterion(fmri_out1, fmri_target)
+        fmri_loss =criterion(fmri_out1.double(), fmri_target.double())
         #fmri_loss =1- torch.abs(self.cos(fmri_out1, fmri_target)).mean()
 
-        #print(fmri_loss)
 
-        #sys.exit()
         #similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
         #fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).mean()
 
