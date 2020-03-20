@@ -223,6 +223,7 @@ class ResNet(nn.Module):
         return x
 
     def _conv_activations(self,x):
+
         x = self.conv1(x)
         x = self.bn1(x)
         x = self.relu(x)

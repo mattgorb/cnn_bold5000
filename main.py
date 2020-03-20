@@ -10,7 +10,7 @@ from fmri_only_trainer import *
 batch_size = 50
 data={}
 
-only_fmri=False
+only_fmri=True
 
 if only_fmri:
     '''
@@ -24,7 +24,6 @@ if only_fmri:
 
     random=False
 
-
     model = resnet18(regularize_layer=regularize_layer)
     weight_file = 'model_weights/resnet50_fmri_only_layer_' + str(regularize_layer) + '_random_'+str(random)+'.pth'
 
@@ -32,7 +31,6 @@ if only_fmri:
     use_cuda = torch.cuda.is_available()
     if use_cuda:
         model.cuda()
-
 
     optimizer =optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=.0005)# optim.Adam(model.parameters())
     loss = nn.CrossEntropyLoss()
@@ -72,8 +70,14 @@ else:
         weight_file='model_weights/cifar10_resnet50.pth'
         model = resnet18()
 
-        alpha=0
+        #remove
+        get_bold5000_dataset = get_bold5000_dataset(batch_size)
+        data['fmri_data'] = get_bold5000_dataset
         regularize_layer ='fc1'
+        model = resnet18(regularize_layer=regularize_layer)
+
+        alpha=0
+
 
     # Check for cuda
     use_cuda = torch.cuda.is_available()
