@@ -10,7 +10,7 @@ from fmri_only_trainer import *
 batch_size = 50
 data={}
 
-only_fmri=True
+only_fmri=False
 
 if only_fmri:
     '''
@@ -54,7 +54,7 @@ else:
     data['test_main']=cifar10_test_loader
 
     #Train with fmri data
-    regularize_with_fmri_data=True
+    regularize_with_fmri_data=False
 
     if regularize_with_fmri_data:
         get_bold5000_dataset = get_bold5000_dataset(batch_size)
@@ -72,7 +72,8 @@ else:
         weight_file='model_weights/cifar10_resnet50.pth'
         model = resnet18()
 
-
+        alpha=0
+        regularize_layer ='fc1'
 
     # Check for cuda
     use_cuda = torch.cuda.is_available()

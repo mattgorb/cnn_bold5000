@@ -91,7 +91,16 @@ class Trainer():
 
 
             else:
+                #temp
+                '''network_state_dict = torch.load(self.weight_file,map_location = torch.device('cpu'))
+                self.model.load_state_dict(network_state_dict)
+                self.model.forward_fmri(data, fmri_data, fmri_data2)
+                sys.exit()'''
+
+
                 output = self.model(data)
+
+
                 loss = self.loss(output, target)
 
             loss.backward()
@@ -126,8 +135,6 @@ class Trainer():
                 if self.use_cuda:
                     data, target = data.cuda(), target.cuda()
                 output = self.model(data)
-
-
 
                 _, predicted = torch.max(output.data, 1)
                 total += target.size(0)
@@ -191,5 +198,5 @@ class Trainer():
         if correct / total > self.accuracy:
             print('Saving weights...')
             self.accuracy = (correct / total)
-            #torch.save(self.model.state_dict(), self.weight_file)
+            torch.save(self.model.state_dict(), self.weight_file)
 

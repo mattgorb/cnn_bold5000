@@ -252,6 +252,7 @@ class ResNet(nn.Module):
         if self.regularize_layer=='fc1':
             return x
 
+        x = self.relu(x)
         x = self.fc2(x)
         return x
 

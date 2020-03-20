@@ -24,6 +24,7 @@ class Bold5000(Dataset):
 
         self.target_data = self.data['RHPPA']
 
+
         f = open(stim_list_dir, 'r')
         self.CSI01_stim_lists = f.read().splitlines()
         f.close()

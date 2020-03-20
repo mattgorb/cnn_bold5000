@@ -1,6 +1,6 @@
 import torch
 import audtorch
-
+import torch.nn as nn
 
 class FMRIOnlyTrainer():
     def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=500,
@@ -82,10 +82,21 @@ class FMRIOnlyTrainer():
                 fmri_target2=torch.rand_like(fmri_target2)
 
 
+            #m = nn.BatchNorm1d(200).astype(torch.FloatTensor)
+            #print(m)
+            #print(fmri_target)
+            import numpy as np
+
+
+
+
+
+
             if self.use_cuda:
                 fmri_data, fmri_target,fmri_data2, fmri_target2 = fmri_data.cuda(), fmri_target.cuda(),fmri_data2.cuda(), fmri_target2.cuda()
 
             fmri_out1, fmri_out2 = self.model.forward_only_fmri(fmri_data, fmri_data2)
+
             loss = self.loss_fmri( fmri_out1, fmri_target, fmri_out2, fmri_target2,log_fmri_corr=True)
 
             loss.backward()
