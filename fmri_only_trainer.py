@@ -3,7 +3,7 @@ import audtorch
 
 
 class FMRIOnlyTrainer():
-    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=50,
+    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=250,
                  use_cuda=False, regularize_layer=None, random=False):
 
         self.model = model
@@ -28,6 +28,7 @@ class FMRIOnlyTrainer():
         self.fmri_loss = []
 
         self.random=random
+        print(self.random)
 
         if self.use_cuda:
             self.model.cuda()
@@ -74,6 +75,7 @@ class FMRIOnlyTrainer():
 
             fmri_data, fmri_target = self.fmri_data.get_batch()
             fmri_data2, fmri_target2 = self.fmri_data.get_batch()
+
 
             if self.random:
                 fmri_target=torch.rand_like(fmri_target)
