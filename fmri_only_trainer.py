@@ -3,7 +3,7 @@ import audtorch
 
 
 class FMRIOnlyTrainer():
-    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=250,
+    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=500,
                  use_cuda=False, regularize_layer=None, random=False):
 
         self.model = model
