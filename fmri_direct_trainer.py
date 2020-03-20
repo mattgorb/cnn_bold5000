@@ -148,8 +148,8 @@ class FMRIDirectTrainer():
 
             fmri_out1 = self.model.forward_single_fmri(fmri_data)
 
-            print((fmri_out1[0]-fmri_target[0]).mean())
+            print(torch.abs((fmri_out1[0]-fmri_target[0])).mean())
 
 
-            print(self.cos(fmri_out1, fmri_target))
+            #print(self.cos(fmri_out1, fmri_target))
             #loss = self.loss_fmri( fmri_out1, fmri_target,log_fmri_corr=True)
