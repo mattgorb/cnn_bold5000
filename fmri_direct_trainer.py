@@ -42,9 +42,10 @@ class FMRIDirectTrainer():
         # cosine similarity
         #criterion = nn.MSELoss()
         #fmri_loss =criterion(fmri_out1.double(), fmri_target.double())
-        #fmri_loss =1- torch.abs(self.cos(fmri_out1, fmri_target)).mean()
-        fmri_loss = (atanh(fmri_out1) - atanh(fmri_target)).pow(2).mean()
-
+        fmri_loss =1- self.cos(fmri_out1, fmri_target).mean()
+        #fmri_loss = (self.cos(fmri_out1, fmri_target))#.pow(2).mean()
+        #print(fmri_loss)
+        #sys.exit()
 
         #similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
         #fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).sum()
@@ -149,4 +150,6 @@ class FMRIDirectTrainer():
 
             print(fmri_out1[0][:10])
             print(fmri_target[0][:10])
+
+            print(self.cos(fmri_out1, fmri_target))
             #loss = self.loss_fmri( fmri_out1, fmri_target,log_fmri_corr=True)
