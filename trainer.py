@@ -92,7 +92,6 @@ class Trainer():
                 output, fmri_out1, fmri_out2 = self.model.forward_fmri(data, fmri_data, fmri_data2)
                 loss = self.loss_plus_fmri(output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2)
 
-
             else:
                 output = self.model(data)
                 loss = self.loss(output, target)

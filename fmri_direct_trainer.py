@@ -62,7 +62,7 @@ class FMRIDirectTrainer():
         for epoch in range(self.epochs):
             mean_epoch_loss = self.train_epoch(epoch)
             print('Epoch: {} Average loss: {:.2f}'.format(epoch + 1, self.batch_size * mean_epoch_loss))
-            #self.test_epoch(epoch)
+            self.test_epoch(epoch)
             self.scheduler.step()
 
 
@@ -124,3 +124,28 @@ class FMRIDirectTrainer():
 
         # Return mean epoch loss
         return epoch_loss / len(self.fmri_data.imagenet_idxs)
+
+    def test_epoch(self, epoch):
+        epoch_loss = 0.
+        print_every_loss = 0.
+        self.model.train()
+
+        for batch_idx in range(1):
+
+            self.optimizer.zero_grad()
+
+            fmri_data, fmri_target = self.fmri_data.get_batch()
+
+
+            if self.random:
+                fmri_target=torch.rand_like(fmri_target)
+
+
+            if self.use_cuda:
+                fmri_data, fmri_target = fmri_data.cuda(), fmri_target.cuda()
+
+            fmri_out1 = self.model.forward_single_fmri(fmri_data)
+
+            print(fmri_out1)
+            print(fmri_target)
+            #loss = self.loss_fmri( fmri_out1, fmri_target,log_fmri_corr=True)
