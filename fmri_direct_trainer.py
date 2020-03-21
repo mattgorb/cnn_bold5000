@@ -42,7 +42,7 @@ class FMRIDirectTrainer():
         # cosine similarity
         #criterion = nn.MSELoss()
         #fmri_loss =criterion(fmri_out1.double(), fmri_target.double())
-        fmri_loss =1- self.cos(fmri_out1, fmri_target).mean()
+        fmri_loss=1- self.cos(fmri_out1, fmri_target).mean()
         #fmri_loss = (self.cos(fmri_out1, fmri_target))#.pow(2).mean()
         #print(fmri_loss)
         #sys.exit()
