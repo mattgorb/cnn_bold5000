@@ -41,6 +41,7 @@ class Trainer():
 
         if self.use_cuda:
             self.model.cuda()
+            self.normalize.cuda()
 
     def loss_plus_fmri(self, output, target, fmri_out1, fmri_target, fmri_out2, fmri_target2,log_fmri_corr=False):
 
