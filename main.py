@@ -11,7 +11,7 @@ from fmri_direct_trainer import FMRIDirectTrainer
 batch_size = 50
 data={}
 
-only_fmri=True
+only_fmri=False
 
 if only_fmri:
     '''
