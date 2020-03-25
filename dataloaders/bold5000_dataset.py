@@ -70,7 +70,7 @@ def get_bold5000_dataset(batch_size):
     to_tensor = transforms.Compose([transforms.ToPILImage(), transforms.Resize((32,32)),transforms.ToTensor(),
                                     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-    filename = './ROIs/CSI1/h5/CSI1_ROIs_TR1.h5'
+    filename = './ROIs/CSI1/h5/CSI1_ROIs_TR34.h5'
     image_folder='./BOLD5000_Stimuli/Scene_Stimuli/Presented_Stimuli/ImageNet'
     stim_list='./ROIs/stim_lists/CSI01_stim_lists.txt'
 
