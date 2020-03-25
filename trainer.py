@@ -67,10 +67,10 @@ class Trainer():
         fmri_sim = self.cos(fmri_target, fmri_target2)
 
         #similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
-        #fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).mean()
+        fmri_loss =(atanh(model_sim)-atanh(fmri_sim)).pow(2).mean()
 
         # 1-pearson correlation
-        fmri_loss = 1 - audtorch.metrics.functional.pearsonr(model_sim, fmri_sim).squeeze(dim=0)
+        #fmri_loss = 1 - audtorch.metrics.functional.pearsonr(model_sim, fmri_sim).squeeze(dim=0)
 
 
         if log_fmri_corr:
