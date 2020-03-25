@@ -58,7 +58,7 @@ else:
     data['test_main']=cifar10_test_loader
 
     #Train with fmri data
-    regularize_with_fmri_data=False
+    regularize_with_fmri_data=True
 
     if regularize_with_fmri_data:
         get_bold5000_dataset = get_bold5000_dataset(batch_size)

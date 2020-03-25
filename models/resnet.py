@@ -234,34 +234,23 @@ class ResNet(nn.Module):
         x = self.layer1(x)
         x = self.layer2(x)
         if self.regularize_layer==2:
-            batch_mean = x.mean(dim=(0, 2, 3))
+            '''batch_mean = x.mean(dim=(0, 2, 3))
             if self.running_mean is None:
                 self.running_mean=torch.zeros_like(batch_mean)
             self.running_mean=self.beta*self.running_mean+(1-self.beta)*batch_mean
-            x=x-self.running_mean[:,None,None]
+            x=x-self.running_mean[:,None,None]'''
 
             x = torch.flatten(x, start_dim=1)
             return x
 
         x = self.layer3(x)
         if self.regularize_layer==3:
-            batch_mean = x.mean(dim=(0, 2, 3))
-            if self.running_mean is None:
-                self.running_mean=torch.zeros_like(batch_mean)
-            self.running_mean=self.beta*self.running_mean+(1-self.beta)*batch_mean
-            x=x-self.running_mean[:,None,None]
 
             x = torch.flatten(x, start_dim=1)
             return x
 
         x = self.layer4(x)
         if self.regularize_layer==4:
-            batch_mean = x.mean(dim=(0, 2, 3))
-            if self.running_mean is None:
-                self.running_mean=torch.zeros_like(batch_mean)
-            self.running_mean=self.beta*self.running_mean+(1-self.beta)*batch_mean
-            x=x-self.running_mean[:,None,None]
-
             x = torch.flatten(x, start_dim=1)
             return x
 
@@ -274,12 +263,6 @@ class ResNet(nn.Module):
 
 
         if self.regularize_layer=='fc1':
-            batch_mean = x.mean(dim=(0,))
-            if self.running_mean is None:
-                self.running_mean=torch.zeros_like(batch_mean)
-            self.running_mean=self.beta*self.running_mean+(1-self.beta)*batch_mean
-
-            x=x-self.running_mean
             return x
 
         x = self.relu(x)
