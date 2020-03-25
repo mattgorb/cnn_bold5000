@@ -59,8 +59,8 @@ class Trainer():
         fmri_target=self.normalize(fmri_target)
         fmri_target2=self.normalize(fmri_target2)
 
-        fmri_out1=self.normalize(fmri_out1)
-        fmri_out2=self.normalize(fmri_out2)
+        #fmri_out1=self.normalize(fmri_out1)
+        #fmri_out2=self.normalize(fmri_out2)
 
         # cosine similarity
         model_sim = self.cos(fmri_out1, fmri_out2)
