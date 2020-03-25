@@ -3,3 +3,7 @@ BOLD5000_Stimuli/
 cifar10_data/
 model_weights/
 results/
+models/__pycache__/
+dataloaders/__pycache__/
+__pycache__/
+/__pycache__/

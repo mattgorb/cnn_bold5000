@@ -47,6 +47,13 @@ class Trainer():
 
         loss_main = self.loss(output, target)
 
+        fmri_target=fmri_target.type(torch.float32)
+        fmri_target2=fmri_target2.type(torch.float32)
+
+        #normalize=nn.BatchNorm1d(200)
+        #fmri_target=normalize(fmri_target)
+        #fmri_target2=normalize(fmri_target2)
+
         # cosine similarity
         model_sim = self.cos(fmri_out1, fmri_out2)
         fmri_sim = self.cos(fmri_target, fmri_target2)
