@@ -1,6 +1,6 @@
 import torch
 import audtorch
-
+import torch.nn as nn
 
 class Trainer():
     def __init__(self, model, optimizer, loss, data, weight_file, regularize_with_fmri_data=False, print_loss_every=100, epochs=250,
@@ -26,6 +26,8 @@ class Trainer():
 
         self.batch_size = self.train_main.batch_size
 
+        self.normalize=nn.BatchNorm1d(200)
+
         self.fmri_weight_file_names=fmri_weight_file_names
 
         self.regularize_with_fmri_data = regularize_with_fmri_data
@@ -49,10 +51,15 @@ class Trainer():
 
         fmri_target=fmri_target.type(torch.float32)
         fmri_target2=fmri_target2.type(torch.float32)
+        fmri_out1=fmri_out1.type(torch.float32)
+        fmri_out2=fmri_out2.type(torch.float32)
 
         #normalize=nn.BatchNorm1d(200)
-        #fmri_target=normalize(fmri_target)
-        #fmri_target2=normalize(fmri_target2)
+        fmri_target=self.normalize(fmri_target)
+        fmri_target2=self.normalize(fmri_target2)
+
+        fmri_out1=self.normalize(fmri_out1)
+        fmri_out2=self.normalize(fmri_out2)
 
         # cosine similarity
         model_sim = self.cos(fmri_out1, fmri_out2)
