@@ -28,7 +28,9 @@ def get_noise_on_test(weight_file, noise):
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(cifar10_test_loader):
             #add random noise
-            data=data+noise*torch.rand_like(data)
+            gaus=(noise)*torch.randn(data.size())
+
+            data=data+gaus
 
             if use_cuda:
                 data, target = data.cuda(), target.cuda()
@@ -46,31 +48,36 @@ def get_noise_on_test(weight_file, noise):
 weight_file='model_weights/cifar10_resnet50.pth'
 weight_file_2='model_weights/cifar10_resnet50_fmri_layer2_alpha0.2.pth'
 weight_file_4='model_weights/cifar10_resnet50_fmri_layer4_alpha0.2.pth'
-
+weight_file_fc='model_weights/cifar10_resnet50_fmri_layerfc1_alpha0.2.pth'
 
 
 normal=[]
 layer2=[]
 layer4=[]
-noise=[0.0,0.1,0.2,0.5,1,2,5,10]
+fc1=[]
+noise=[0.0,0.5,1,1.5,2,3,4,5,6,8,10]
 
 for n in noise:
     normal.append(get_noise_on_test(weight_file, n))
-
+print('2')
 for n in noise:
     layer2.append(get_noise_on_test(weight_file_2, n))
-
+print('4')
 for n in noise:
     layer4.append(get_noise_on_test(weight_file_4, n))
+print('fc1')
+for n in noise:
+    fc1.append(get_noise_on_test(weight_file_fc, n))
 
 
 plt.plot([i for i in noise], [i for i in normal], linestyle='--', label='Normal')
 plt.plot([i for i in noise], [i for i in layer2], linestyle='--', label='Layer 2 reg')
 plt.plot([i for i in noise], [i for i in layer4], linestyle='--', label='Layer 4 reg')
+plt.plot([i for i in noise], [i for i in fc1], linestyle='--', label='fc1')
 
 plt.legend(loc='upper right', framealpha=1, frameon=True)
 plt.savefig('visuals/robustness.png')
-
+''''''
 
 
 f = open('results/fmri_dissimilarity_layer_2_alpha_0.2.txt', 'r')
@@ -79,7 +86,7 @@ f.close()
 layer_2=[float(x[:-1]) for x in layer_2]
 
 
-f = open('results/fmri_dissimilarity_layer_4_alpha_0.2.txt', 'r')
+f = open('results/fmri_dissimilarity_layer_fc1_alpha_0.2.txt', 'r')
 layer_4 = f.readlines()
 f.close()
 layer_4=[float(x[:-1]) for x in layer_4]

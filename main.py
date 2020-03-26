@@ -1,6 +1,6 @@
 from torch import optim
 import torch.nn as nn
-from dataloaders.bold5000_dataset import *
+
 from dataloaders.cifar10_dataloaders import *
 
 from models.resnet import *
@@ -17,6 +17,8 @@ if only_fmri:
     '''
     this trains only on FMRI data, not using CIFAR10 data at all.  Want to apply this to transfer learning
     '''
+
+    from dataloaders.bold5000_traintest import *
     get_bold5000_dataset = get_bold5000_dataset(batch_size)
     data['fmri_data'] = get_bold5000_dataset
 
@@ -33,7 +35,7 @@ if only_fmri:
     if use_cuda:
         model.cuda()
 
-    optimizer =optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=.0005)# optim.Adam(model.parameters())
+    optimizer =optim.SGD(model.parameters(), lr=0.01, momentum=0.9, weight_decay=.0005)# optim.Adam(model.parameters())
     loss = nn.CrossEntropyLoss()
 
     # Define trainer
@@ -52,6 +54,7 @@ else:
     regularize CIFAR10 model with FMRI data. trying to replicate similar to
       https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines
     '''
+    from dataloaders.bold5000_dataset import *
     # Load data
     cifar10_train_loader, cifar10_test_loader = get_cifar_dataloaders(batch_size=batch_size)
     data['train_main']=cifar10_train_loader
@@ -65,7 +68,7 @@ else:
         data['fmri_data']=get_bold5000_dataset
 
         # Main Variables
-        alpha = 0.2
+        alpha = 20
         #regularize_layer={1,2,3,4}
         regularize_layer = 'fc1'
 

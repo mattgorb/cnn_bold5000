@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class FMRIDirectTrainer():
-    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=500,
+    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=250,
                  use_cuda=False, regularize_layer=None, random=False):
 
         self.model = model
@@ -17,7 +17,7 @@ class FMRIDirectTrainer():
         self.epochs = epochs
         self.use_cuda = use_cuda
 
-        self.accuracy = 0
+        self.best = 1e6
 
         self.weight_file = weight_file
 
@@ -63,7 +63,7 @@ class FMRIDirectTrainer():
     def train(self):
         for epoch in range(self.epochs):
             mean_epoch_loss = self.train_epoch(epoch)
-            print('Epoch: {} Average loss: {:.2f}'.format(epoch + 1, self.batch_size * mean_epoch_loss))
+            #print('Epoch: {} Average loss: {:.2f}'.format(epoch + 1, self.batch_size * mean_epoch_loss))
             self.test_epoch(epoch)
             self.scheduler.step()
 
@@ -74,7 +74,7 @@ class FMRIDirectTrainer():
         print_every_loss = 0.
         self.model.train()
 
-        for batch_idx in range(int(len(self.fmri_data.imagenet_idxs)/self.batch_size)):
+        for batch_idx in range(int(len(self.fmri_data.train)/self.batch_size)):
 
             self.optimizer.zero_grad()
 
@@ -100,14 +100,43 @@ class FMRIDirectTrainer():
             epoch_loss += train_loss
             print_every_loss += train_loss
 
-            if batch_idx % self.print_loss_every == 0:
-                if batch_idx == 0:
-                    mean_loss = print_every_loss
-                else:
-                    mean_loss = print_every_loss / self.print_loss_every
-                print('{}/{}\tLoss: {:.3f}'.format(batch_idx ,
-                                                   int(len(self.fmri_data.imagenet_idxs)/self.batch_size), mean_loss))
-                print_every_loss = 0.
+
+
+        '''fmri_loss_file="results/fmri_only_dissimilarity_layer_"+str(self.regularize_layer)+".txt"
+        if epoch > 0:
+            outF = open(fmri_loss_file, "a")
+        else:
+            outF = open(fmri_loss_file, "w")
+
+        for line in self.fmri_loss:
+            outF.write(line)
+            outF.write("\n")
+        outF.close()
+        self.fmri_loss = []
+
+        torch.save(self.model.state_dict(), self.weight_file)'''
+
+
+        # Return mean epoch loss
+        return epoch_loss / len(self.fmri_data.imagenet_idxs)
+
+    def test_epoch(self, epoch):
+        epoch_loss = 0.
+        self.model.eval()
+
+        for batch_idx in range(int(len(self.fmri_data.test)/self.batch_size)):
+            fmri_data, fmri_target = self.fmri_data.get_batch(True)
+
+            if self.random:
+                fmri_target=torch.rand_like(fmri_target)
+
+            if self.use_cuda:
+                fmri_data, fmri_target = fmri_data.cuda(), fmri_target.cuda()
+
+            fmri_out1 = self.model.forward_single_fmri(fmri_data)
+            loss = self.loss_fmri( fmri_out1, fmri_target,log_fmri_corr=True)
+            train_loss = loss.item()
+            epoch_loss += train_loss
 
         fmri_loss_file="results/fmri_only_dissimilarity_layer_"+str(self.regularize_layer)+".txt"
         if epoch > 0:
@@ -120,36 +149,8 @@ class FMRIDirectTrainer():
             outF.write("\n")
         outF.close()
         self.fmri_loss = []
-
-        torch.save(self.model.state_dict(), self.weight_file)
-
-
-        # Return mean epoch loss
-        return epoch_loss / len(self.fmri_data.imagenet_idxs)
-
-    def test_epoch(self, epoch):
-        epoch_loss = 0.
-        print_every_loss = 0.
-        self.model.train()
-
-        for batch_idx in range(1):
-
-            self.optimizer.zero_grad()
-
-            fmri_data, fmri_target = self.fmri_data.get_batch()
-
-
-            if self.random:
-                fmri_target=torch.rand_like(fmri_target)
-
-
-            if self.use_cuda:
-                fmri_data, fmri_target = fmri_data.cuda(), fmri_target.cuda()
-
-            fmri_out1 = self.model.forward_single_fmri(fmri_data)
-
-            print(torch.abs((fmri_out1[0]-fmri_target[0])).mean())
-
-
-            #print(self.cos(fmri_out1, fmri_target))
-            #loss = self.loss_fmri( fmri_out1, fmri_target,log_fmri_corr=True)
+        print(epoch_loss)
+        if epoch_loss<self.best:
+            self.best=epoch_loss
+            print('saving...loss='+str(epoch_loss))
+            torch.save(self.model.state_dict(), self.weight_file)
