@@ -13,7 +13,7 @@ batch_size = 50
 cifar10_train_loader, cifar10_test_loader = get_cifar_dataloaders(batch_size=batch_size)
 
 
-weight_file='model_weights/resnet50_fmri_only_layer_fc1_random_False.pth'
+weight_file='model_weights/resnet50_fmri_only_layer_vggfc1_random_False.pth'
 loss_file="results/test_losses_fmri_false_layer_2.txt"
 accuracy_file="results/test_losses_fmri_false_layer_2.txt"
 
@@ -31,7 +31,7 @@ if use_cuda:
 
 model.eval()
 
-network_state_dict = torch.load(weight_file)
+network_state_dict = torch.load(weight_file,map_location=torch.device('cpu'))
 model.load_state_dict(network_state_dict)
 
 optimizer =optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=.0005)# optim.Adam(model.parameters())
@@ -47,10 +47,10 @@ for i in b5000.imagenet_idxs:
     out=model(image.unsqueeze(dim=0)).detach().numpy()
     #fmri_data.append(out[0])
 
-    fmri_data.append(b5000.brain_target_data[i])
-    #print(out[0])
-    #print(b5000.brain_target_data[i].numpy())#.numpy()
-    #break
+    #fmri_data.append(b5000.brain_target_data[i])
+    print(out[0])
+    print(b5000.brain_target_data[i].numpy())#.numpy()
+    break
 
     fmri_class_data.append(b5000.binary_class_data[b5000.CSI01_stim_lists[i]])
 
