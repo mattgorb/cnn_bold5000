@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-
+from torch.nn import functional as F
 
 
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
@@ -48,6 +48,7 @@ class BasicBlock(nn.Module):
         self.conv1 = conv3x3(inplanes, planes, stride)
         self.bn1 = norm_layer(planes)
         self.relu = nn.ReLU(inplace=True)
+        #self.sigmoid = nn.Sigmoid()
         self.conv2 = conv3x3(planes, planes)
         self.bn2 = norm_layer(planes)
         self.downsample = downsample
@@ -156,7 +157,7 @@ class ResNet(nn.Module):
                                        dilate=replace_stride_with_dilation[2])
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc1 = nn.Linear(512 * block.expansion, 200)
-        self.fc2 = nn.Linear(200, num_classes)
+        #self.fc2 = nn.Linear(200, num_classes)
 
         self.regularize_layer=regularize_layer
         self.beta=0.9
@@ -219,9 +220,10 @@ class ResNet(nn.Module):
         x = torch.flatten(x, 1)
 
         x = self.fc1(x)
-        x=self.relu(x)
+        x=F.sigmoid(x)
 
-        x=self.fc2(x)
+
+        #x=self.fc2(x)
         return x
 
     def _conv_activations(self,x):
@@ -265,9 +267,9 @@ class ResNet(nn.Module):
         if self.regularize_layer=='fc1':
             return x
 
-        x = self.relu(x)
+        '''x = self.relu(x)
         x = self.fc2(x)
-        return x
+        return x'''
 
     def forward(self,x):
         return self._forward_impl(x)

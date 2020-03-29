@@ -1,7 +1,8 @@
 import torch
 import audtorch
 import torch.nn as nn
-import torch.nn.functional as F
+#import torch.nn.functional as F
+from torch.nn import functional as F
 
 class FMRIDirectTrainer():
     def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=250,
@@ -9,7 +10,8 @@ class FMRIDirectTrainer():
 
         self.model = model
         self.optimizer = optimizer
-        self.loss = loss
+        self.loss = nn.MSELoss()
+
 
         self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, 25, gamma=0.1)
 
@@ -25,11 +27,11 @@ class FMRIDirectTrainer():
         self.batch_size = self.fmri_data.batch_size
 
         self.cos = torch.nn.CosineSimilarity(dim=1, eps=1e-08)
-        self.regularize_layer = regularize_layer
+        #self.regularize_layer = regularize_layer
         self.fmri_loss = []
 
         self.random=random
-        print(self.random)
+        #self.normalize = nn.BatchNorm1d(200)
 
         if self.use_cuda:
             self.model.cuda()
@@ -39,10 +41,23 @@ class FMRIDirectTrainer():
         def atanh(x, eps=1e-5):
             return 0.5 * torch.log((1 + x + eps) / (1 - x + eps))
 
+        #fmri_target=fmri_target.type(torch.float32)
+        #fmri_target=self.normalize(fmri_target)
+
         # cosine similarity
         #criterion = nn.MSELoss()
         #fmri_loss =criterion(fmri_out1.double(), fmri_target.double())
-        fmri_loss=1- self.cos(fmri_out1, fmri_target).mean()
+
+
+        #fmri_loss=1- self.cos(fmri_out1, fmri_target).mean()
+
+        #backup
+        fmri_target=fmri_target.type(torch.float32)
+        #fmri_loss=F.binary_cross_entropy(fmri_out1,fmri_target, reduction='sum')
+
+        #fmri_loss=self.loss(fmri_out1,fmri_target)
+        fmri_loss=F.binary_cross_entropy(fmri_out1, fmri_target, reduction='sum')
+
         #fmri_loss = (self.cos(fmri_out1, fmri_target))#.pow(2).mean()
         #print(fmri_loss)
         #sys.exit()
@@ -64,7 +79,7 @@ class FMRIDirectTrainer():
         for epoch in range(self.epochs):
             mean_epoch_loss = self.train_epoch(epoch)
             #print('Epoch: {} Average loss: {:.2f}'.format(epoch + 1, self.batch_size * mean_epoch_loss))
-            self.test_epoch(epoch)
+            #self.test_epoch(epoch)
             self.scheduler.step()
 
 
@@ -74,12 +89,12 @@ class FMRIDirectTrainer():
         print_every_loss = 0.
         self.model.train()
 
-        for batch_idx in range(int(len(self.fmri_data.train)/self.batch_size)):
+        for batch_idx in range(int(len(self.fmri_data.imagenet_idxs)/self.batch_size)):
+        #for batch_idx in range(int(len(self.fmri_data.train)/self.batch_size)):
 
             self.optimizer.zero_grad()
 
             fmri_data, fmri_target = self.fmri_data.get_batch()
-
 
             if self.random:
                 fmri_target=torch.rand_like(fmri_target)
@@ -88,7 +103,7 @@ class FMRIDirectTrainer():
             if self.use_cuda:
                 fmri_data, fmri_target = fmri_data.cuda(), fmri_target.cuda()
 
-            fmri_out1 = self.model.forward_single_fmri(fmri_data)
+            fmri_out1 = self.model(fmri_data)
 
             loss = self.loss_fmri( fmri_out1, fmri_target,log_fmri_corr=True)
 
@@ -100,22 +115,11 @@ class FMRIDirectTrainer():
             epoch_loss += train_loss
             print_every_loss += train_loss
 
-
-
-        '''fmri_loss_file="results/fmri_only_dissimilarity_layer_"+str(self.regularize_layer)+".txt"
-        if epoch > 0:
-            outF = open(fmri_loss_file, "a")
-        else:
-            outF = open(fmri_loss_file, "w")
-
-        for line in self.fmri_loss:
-            outF.write(line)
-            outF.write("\n")
-        outF.close()
-        self.fmri_loss = []
-
-        torch.save(self.model.state_dict(), self.weight_file)'''
-
+        print(epoch_loss)
+        if epoch_loss<self.best:
+            self.best=epoch_loss
+            print('saving...loss='+str(epoch_loss))
+            torch.save(self.model.state_dict(), self.weight_file)
 
         # Return mean epoch loss
         return epoch_loss / len(self.fmri_data.imagenet_idxs)

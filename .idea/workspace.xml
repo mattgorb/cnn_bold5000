@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7e8635b7-b5a0-48de-9a88-cbf845893f54" name="Default Changelist" comment="" />
+    <list default="true" id="7e8635b7-b5a0-48de-9a88-cbf845893f54" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dataloaders/bold5000_wordnet_mods.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dataloaders/words.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/vgg.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unsupervised_cifar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoencoder_trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/old_files/autoencoder_trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataloaders/bold5000-analysis.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataloaders/bold5000_dataset.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataloaders/bold5000_traintest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataloaders/cifar10_dataloaders.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataloaders/cifar10_dataloaders.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmri_direct_trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/fmri_direct_trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmri_only_trainer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_ae.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/resnet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/vgg16.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/noise_analysis.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/relate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_cifar.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/visuals/robustness.png" beforeDir="false" afterPath="$PROJECT_DIR$/visuals/robustness.png" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,22 +56,26 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1Z64nD5AqsSStP7g7Xpoh0PlaKt" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../brain_similarity" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/../bold5000/model_weights" />
-      <recent name="$PROJECT_DIR$/../bold5000/results" />
+      <recent name="$PROJECT_DIR$/model_weights" />
+      <recent name="$PROJECT_DIR$/results" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/../bold5000/model_weights" />
-      <recent name="$PROJECT_DIR$/../bold5000/visuals" />
-      <recent name="$PROJECT_DIR$/../bold5000/results" />
-      <recent name="$PROJECT_DIR$/../bold5000/models" />
-      <recent name="$PROJECT_DIR$/../bold5000/dataloaders" />
+      <recent name="$PROJECT_DIR$/old_files" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/ae" />
+      <recent name="$PROJECT_DIR$/dataloaders" />
+      <recent name="$PROJECT_DIR$/visuals" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -62,18 +90,21 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.bold5000-cifar10">
+  <component name="RunManager" selected="Python.unsupervised_cifar">
     <configuration name="bold5000-cifar10" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="encoded_classifier" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../bold5000/dataloaders" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/dataloaders" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../bold5000/dataloaders/bold5000-cifar10.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dataloaders/bold5000-cifar10.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -86,13 +117,16 @@
       <module name="encoded_classifier" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../bold5000/dataloaders" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/dataloaders" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../bold5000/dataloaders/bold5000_dataset.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/old_files/bold5000_dataset.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -105,13 +139,16 @@
       <module name="encoded_classifier" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../bold5000" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../bold5000/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -124,13 +161,35 @@
       <module name="encoded_classifier" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../bold5000/models" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/models" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../bold5000/models/resnet.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/models/resnet.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="unsupervised_cifar" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="encoded_classifier" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/unsupervised_cifar.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -141,11 +200,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.unsupervised_cifar" />
         <item itemvalue="Python.bold5000-cifar10" />
         <item itemvalue="Python.resnet" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.bold5000_dataset" />
       </list>
     </recent_temporary>
   </component>
@@ -159,28 +218,43 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1584146374417</updated>
-      <workItem from="1584146377129" duration="265025000" />
+      <workItem from="1584146377129" duration="274728000" />
+      <workItem from="1585270759488" duration="9174000" />
+      <workItem from="1585317047887" duration="49780000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../bold5000/train_classifier.py</url>
+          <url>file://$PROJECT_DIR$/train_classifier.py</url>
           <line>60</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../bold5000/train_decoder.py</url>
+          <url>file://$PROJECT_DIR$/train_decoder.py</url>
           <line>45</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/../bold5000/train_decoder.py</url>
+          <url>file://$PROJECT_DIR$/train_decoder.py</url>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
