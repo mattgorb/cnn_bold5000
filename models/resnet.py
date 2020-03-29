@@ -157,7 +157,7 @@ class ResNet(nn.Module):
                                        dilate=replace_stride_with_dilation[2])
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc1 = nn.Linear(512 * block.expansion, 200)
-        #self.fc2 = nn.Linear(200, num_classes)
+        #self.fc2 = nn.Linear(2048, 200)
 
         self.regularize_layer=regularize_layer
         self.beta=0.9
@@ -220,10 +220,9 @@ class ResNet(nn.Module):
         x = torch.flatten(x, 1)
 
         x = self.fc1(x)
-        #x=F.sigmoid(x)
-
-
+        #x=F.relu(x)
         #x=self.fc2(x)
+
         return x
 
     def _conv_activations(self,x):

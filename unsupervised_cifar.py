@@ -6,6 +6,7 @@ from sklearn.svm import LinearSVC
 from sklearn.metrics import roc_auc_score
 from dataloaders.bold5000_wordnet_mods import *
 from collections import Counter
+from sklearn.svm import SVC
 
 batch_size = 50
 
@@ -25,18 +26,18 @@ accuracy_file="results/test_losses_fmri_true_layer_2.txt"
 '''
 
 model = resnet18()
+
+
 use_cuda = torch.cuda.is_available()
 if use_cuda:
     model.cuda()
 
 model.eval()
 
-network_state_dict = torch.load(weight_file,map_location=torch.device('cpu'))
+network_state_dict = torch.load(weight_file)
 model.load_state_dict(network_state_dict)
 
-optimizer =optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=.0005)# optim.Adam(model.parameters())
-loss = nn.CrossEntropyLoss()
-
+print('loaded '+str(weight_file))
 
 
 b5000 = get_bold5000_dataset(1)
@@ -47,9 +48,9 @@ for i in b5000.imagenet_idxs:
     out=model(image.unsqueeze(dim=0)).detach().numpy()
     #fmri_data.append(out[0])
 
-    #fmri_data.append(b5000.brain_target_data[i])
-    print(out[0])
-    print(b5000.brain_target_data[i].numpy())#.numpy()
+    fmri_data.append(target.numpy())
+    print(out[0][:20])
+    print(target.numpy()[:20])#.numpy()
     break
 
     fmri_class_data.append(b5000.binary_class_data[b5000.CSI01_stim_lists[i]])
@@ -103,7 +104,7 @@ fmri_data,fmri_class_data=balance_classes(fmri_data,fmri_class_data)
 def fit_svm(data,targets):
     clf = LinearSVC(random_state=0, tol=1e-5, class_weight='balanced')  #
     #clf.fit(fmri_data, np.array(fmri_class_data))
-    #clf = SVC(gamma='auto', kernel='rbf')
+    clf = SVC(gamma='auto', kernel='rbf')
     clf.fit(fmri_data, fmri_class_data)
     y_pred = clf.predict(data)
     #y_pred = clf.decision_function(data)
@@ -111,7 +112,7 @@ def fit_svm(data,targets):
     #print("Roc Score")
     #fpr, tpr, threshold = metrics.roc_curve(targets, y_pred)
     print(roc_auc_score(targets, y_pred))
-    #return
+    return
     coef = np.reshape(clf.coef_, (clf.coef_.shape[1], clf.coef_.shape[0]))
     test_values = []
     for h in range(len(data)):
@@ -129,7 +130,7 @@ def fit_svm(data,targets):
     plt.legend(loc="lower right")
     plt.savefig('svm_cifar.png')
 
-fit_svm(cifar10_data, cifar10_targets)
+#fit_svm(cifar10_data, cifar10_targets)
 fit_svm(fmri_data,fmri_class_data)
 
 

@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e8635b7-b5a0-48de-9a88-cbf845893f54" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/autoencoder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataloaders/bold5000_wordnet_mods.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataloaders/bold5000_wordnet_mods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmri_direct_trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/fmri_direct_trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/resnet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/svm_cifar.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/unsupervised_cifar.py" beforeDir="false" afterPath="$PROJECT_DIR$/unsupervised_cifar.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,8 +56,8 @@
       <recent name="$PROJECT_DIR$/results" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/old_files" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/old_files" />
       <recent name="$PROJECT_DIR$/ae" />
       <recent name="$PROJECT_DIR$/dataloaders" />
       <recent name="$PROJECT_DIR$/visuals" />
@@ -199,7 +205,7 @@
       <updated>1584146374417</updated>
       <workItem from="1584146377129" duration="274728000" />
       <workItem from="1585270759488" duration="9174000" />
-      <workItem from="1585317047887" duration="52065000" />
+      <workItem from="1585317047887" duration="71285000" />
     </task>
     <servers />
   </component>

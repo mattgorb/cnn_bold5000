@@ -7,7 +7,7 @@ import h5py
 import torch.nn as nn
 import numpy as np
 from torch import FloatTensor
-from sklearn.preprocessing import QuantileTransformer
+from sklearn.preprocessing import QuantileTransformer, PowerTransformer, StandardScaler
 
 
 def get_classes(CSI01_stim_lists):
@@ -65,12 +65,18 @@ class Bold5000(Dataset):
         self.transform = transform
         self.batch_size=batch_size
 
-        self.brain_target_data = self.data['RHPPA']
 
-        quantile_transformer = QuantileTransformer(random_state=0,n_quantiles=92)
+        self.brain_target_data = self.data['RHPPA']
+        #self.brain_target_data = torch.tensor(self.brain_target_data)
+
+        quantile_transformer = QuantileTransformer(random_state=0, output_distribution='normal')#,n_quantiles=92
+        #quantile_transformer = PowerTransformer(method='yeo-johnson')#,n_quantiles=92
+        #quantile_transformer = StandardScaler()#,n_quantiles=92
         self.brain_target_data=torch.tensor(quantile_transformer.fit_transform(self.brain_target_data))
 
+
         #self.brain_target_data=(self.brain_target_data - self.brain_target_data.min())/(self.brain_target_data.max()-self.brain_target_data.min())
+        #self.brain_target_data=torch.tensor(self.brain_target_data)
         #self.brain_target_data= (self.brain_target_data - self.brain_target_data.mean()) / self.brain_target_data.std()
 
         #print(self.brain_target_data[0])
@@ -129,7 +135,7 @@ class Bold5000(Dataset):
 
 def get_bold5000_dataset(batch_size):
     to_tensor = transforms.Compose([transforms.ToPILImage(), transforms.Resize((32,32)),transforms.ToTensor(),
-                                    #transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+                                    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
                                     ])
 
     filename = './ROIs/CSI1/h5/CSI1_ROIs_TR34.h5'

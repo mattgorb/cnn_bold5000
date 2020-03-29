@@ -1,6 +1,7 @@
 from torch import optim
 
 from dataloaders.cifar10_dataloaders import *
+from fmri_only_trainer import FMRIOnlyTrainer
 
 from models.resnet import *
 from models.vgg import *
@@ -32,8 +33,7 @@ if only_fmri:
 
     model = resnet18(regularize_layer=regularize_layer)
     #model=vgg11(num_classes=200)
-    #print(model)
-    #sys.exit()
+
     weight_file = 'model_weights/resnet50_fmri_only_layer_vgg' + str(regularize_layer) + '_random_'+str(random)+'.pth'
 
     # Check for cuda

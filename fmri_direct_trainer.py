@@ -5,7 +5,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 class FMRIDirectTrainer():
-    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=250,
+    def __init__(self, model, optimizer, loss, data, weight_file,  print_loss_every=100, epochs=2500,
                  use_cuda=False, regularize_layer=None, random=False):
 
         self.model = model
@@ -104,6 +104,8 @@ class FMRIDirectTrainer():
                 fmri_data, fmri_target = fmri_data.cuda(), fmri_target.cuda()
 
             fmri_out1 = self.model(fmri_data)
+            #print(fmri_out1.max())
+            #print(fmri_out1.min())
 
             loss = self.loss_fmri( fmri_out1, fmri_target,log_fmri_corr=True)
 
