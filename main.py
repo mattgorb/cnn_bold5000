@@ -5,8 +5,8 @@ from dataloaders.cifar10_dataloaders import *
 from models.resnet import *
 from models.vgg import *
 
-from old_files.trainer import *
-from old_files.fmri_only_trainer import *
+#from old_files.trainer import *
+#from old_files.fmri_only_trainer import *
 from fmri_direct_trainer import FMRIDirectTrainer
 
 batch_size = 10
@@ -102,12 +102,12 @@ else:
 
 
     optimizer =optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=.0005)# optim.Adam(model.parameters())
-    loss = nn.CrossEntropyLoss()
+    #loss = nn.CrossEntropyLoss()
 
     # Define trainer
-    trainer = Trainer(model, optimizer,loss,data, weight_file,
+    '''trainer = Trainer(model, optimizer,loss,data, weight_file,
                       regularize_with_fmri_data=regularize_with_fmri_data,use_cuda=use_cuda,
-                      alpha_factor=alpha,regularize_layer=regularize_layer)
+                      alpha_factor=alpha,regularize_layer=regularize_layer)'''
 
 # Train model for 250 epochs
 trainer.train()

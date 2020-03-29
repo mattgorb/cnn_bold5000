@@ -2,29 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e8635b7-b5a0-48de-9a88-cbf845893f54" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dataloaders/bold5000_wordnet_mods.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dataloaders/words.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/vgg.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/unsupervised_cifar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autoencoder_trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/old_files/autoencoder_trainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataloaders/bold5000-analysis.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataloaders/bold5000_dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataloaders/bold5000_traintest.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataloaders/cifar10_dataloaders.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataloaders/cifar10_dataloaders.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fmri_direct_trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/fmri_direct_trainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fmri_only_trainer.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_ae.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/resnet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vgg16.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/noise_analysis.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/relate.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_cifar.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/visuals/robustness.png" beforeDir="false" afterPath="$PROJECT_DIR$/visuals/robustness.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -220,7 +199,7 @@
       <updated>1584146374417</updated>
       <workItem from="1584146377129" duration="274728000" />
       <workItem from="1585270759488" duration="9174000" />
-      <workItem from="1585317047887" duration="49780000" />
+      <workItem from="1585317047887" duration="50137000" />
     </task>
     <servers />
   </component>
