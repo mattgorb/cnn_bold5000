@@ -67,8 +67,8 @@ class Bold5000(Dataset):
 
         self.brain_target_data = self.data['RHPPA']
 
-        quantile_transformer = QuantileTransformer(random_state=0,n_quantiles=92)
-        self.brain_target_data=torch.tensor(quantile_transformer.fit_transform(self.brain_target_data))
+        #quantile_transformer = QuantileTransformer(random_state=0,n_quantiles=92)
+        #self.brain_target_data=torch.tensor(quantile_transformer.fit_transform(self.brain_target_data))
 
         #self.brain_target_data=(self.brain_target_data - self.brain_target_data.min())/(self.brain_target_data.max()-self.brain_target_data.min())
         #self.brain_target_data= (self.brain_target_data - self.brain_target_data.mean()) / self.brain_target_data.std()

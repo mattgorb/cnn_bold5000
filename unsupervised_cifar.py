@@ -45,12 +45,12 @@ fmri_class_data=[]
 for i in b5000.imagenet_idxs:
     image, target, idx=b5000[i]
     out=model(image.unsqueeze(dim=0)).detach().numpy()
-    fmri_data.append(out[0])
+    #fmri_data.append(out[0])
 
-    #fmri_data.append(b5000.brain_target_data[i].numpy())
-    print(out[0])
-    print(b5000.brain_target_data[i].numpy())#.numpy()
-    break
+    fmri_data.append(b5000.brain_target_data[i])
+    #print(out[0])
+    #print(b5000.brain_target_data[i].numpy())#.numpy()
+    #break
 
     fmri_class_data.append(b5000.binary_class_data[b5000.CSI01_stim_lists[i]])
 

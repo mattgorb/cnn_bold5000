@@ -55,8 +55,8 @@ class FMRIDirectTrainer():
         fmri_target=fmri_target.type(torch.float32)
         #fmri_loss=F.binary_cross_entropy(fmri_out1,fmri_target, reduction='sum')
 
-        #fmri_loss=self.loss(fmri_out1,fmri_target)
-        fmri_loss=F.binary_cross_entropy(fmri_out1, fmri_target, reduction='sum')
+        fmri_loss=self.loss(fmri_out1,fmri_target)
+        #fmri_loss=F.binary_cross_entropy(fmri_out1, fmri_target, reduction='sum')
 
         #fmri_loss = (self.cos(fmri_out1, fmri_target))#.pow(2).mean()
         #print(fmri_loss)
