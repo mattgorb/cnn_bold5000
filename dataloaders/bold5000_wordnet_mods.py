@@ -77,8 +77,7 @@ class Bold5000(Dataset):
         pca=PCA(n_components=8)
         self.brain_target_data = pca.fit_transform( self.brain_target_data)
 
-        self.brain_target_data = (self.brain_target_data - self.brain_target_data.min()) / (
-                    self.brain_target_data.max() - self.brain_target_data.min())
+        #self.brain_target_data = (self.brain_target_data - self.brain_target_data.min()) / (self.brain_target_data.max() - self.brain_target_data.min())
 
         self.brain_target_data = torch.tensor(self.brain_target_data)
 

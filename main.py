@@ -33,6 +33,7 @@ if only_fmri:
 
     model = resnet18(regularize_layer=regularize_layer)
     model=vgg16(num_classes=200)
+    model=models.vgg16(pretrained=True, num_classes=8)
 
     weight_file = 'model_weights/pca.pth'
 
