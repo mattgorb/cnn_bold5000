@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e8635b7-b5a0-48de-9a88-cbf845893f54" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/autoencoder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autoencoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/autoencoder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dataloaders/bold5000_wordnet_mods.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataloaders/bold5000_wordnet_mods.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fmri_direct_trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/fmri_direct_trainer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/resnet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/svm_cifar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/vgg.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/vgg.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unsupervised_cifar.py" beforeDir="false" afterPath="$PROJECT_DIR$/unsupervised_cifar.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,7 +48,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../brain_similarity" />
+    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/root_django_backend" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -168,6 +168,9 @@
       <module name="encoded_classifier" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -205,7 +208,8 @@
       <updated>1584146374417</updated>
       <workItem from="1584146377129" duration="274728000" />
       <workItem from="1585270759488" duration="9174000" />
-      <workItem from="1585317047887" duration="71285000" />
+      <workItem from="1585317047887" duration="90188000" />
+      <workItem from="1585586147932" duration="6464000" />
     </task>
     <servers />
   </component>

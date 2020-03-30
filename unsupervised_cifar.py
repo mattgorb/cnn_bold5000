@@ -7,26 +7,19 @@ from sklearn.metrics import roc_auc_score
 from dataloaders.bold5000_wordnet_mods import *
 from collections import Counter
 from sklearn.svm import SVC
+from models.vgg import *
 
-batch_size = 50
+#batch_size = 50
 
 # Load data
-cifar10_train_loader, cifar10_test_loader = get_cifar_dataloaders(batch_size=batch_size)
+cifar10_train_loader, cifar10_test_loader = get_cifar_dataloaders(batch_size=10)
 
 
-weight_file='model_weights/resnet50_fmri_only_layer_vggfc1_random_False.pth'
-loss_file="results/test_losses_fmri_false_layer_2.txt"
-accuracy_file="results/test_losses_fmri_false_layer_2.txt"
+weight_file='model_weights/pca.pth'
 
-
-'''
-weight_file='model_weights/resnet50_fmri_only_layer_fc1_random_True.pth'
-loss_file="results/test_losses_fmri_true_layer_2.txt"
-accuracy_file="results/test_losses_fmri_true_layer_2.txt"
-'''
 
 model = resnet18()
-
+model=vgg11(num_classes=200)
 
 use_cuda = torch.cuda.is_available()
 if use_cuda:
@@ -43,20 +36,28 @@ print('loaded '+str(weight_file))
 b5000 = get_bold5000_dataset(1)
 fmri_data=[]
 fmri_class_data=[]
+j=0
 for i in b5000.imagenet_idxs:
     image, target, idx=b5000[i]
     out=model(image.unsqueeze(dim=0)).detach().numpy()
     #fmri_data.append(out[0])
 
     fmri_data.append(target.numpy())
-    print(out[0][:20])
-    print(target.numpy()[:20])#.numpy()
-    break
+    #print(out[0])
+    #print(target.numpy())#.numpy()
+    '''print(np.mean((out[0]-target.numpy())**2))
+    #print(np.mean(np.abs((out[0]-target.numpy()))))
+    j+=1
+    if j>5:
+        break'''
 
     fmri_class_data.append(b5000.binary_class_data[b5000.CSI01_stim_lists[i]])
 
-
-
+#rom sklearn.decomposition import PCA
+#pca = PCA(n_components=20)
+#fmri_data=pca.fit_transform(fmri_data)
+#print(pca.singular_values_)
+#print(pca.explained_variance_ratio_)
 
 objects=[0,1,8,9]
 animals=[2,3,4,5,6,7]
@@ -95,7 +96,7 @@ def balance_classes(data,targets):
                 b+=1
     return np.array(revised_data), np.array(revised_targets)
 
-cifar10_data,cifar10_targets=balance_classes(cifar10_data,cifar10_targets)
+#cifar10_data,cifar10_targets=balance_classes(cifar10_data,cifar10_targets)
 fmri_data,fmri_class_data=balance_classes(fmri_data,fmri_class_data)
 
 
@@ -130,7 +131,8 @@ def fit_svm(data,targets):
     plt.legend(loc="lower right")
     plt.savefig('svm_cifar.png')
 
-#fit_svm(cifar10_data, cifar10_targets)
+fit_svm(cifar10_data, cifar10_targets)
+print(fmri_data.shape)
 fit_svm(fmri_data,fmri_class_data)
 
 

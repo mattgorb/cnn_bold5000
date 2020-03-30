@@ -7,8 +7,8 @@ import h5py
 import torch.nn as nn
 import numpy as np
 from torch import FloatTensor
-from sklearn.preprocessing import QuantileTransformer, PowerTransformer, StandardScaler
-
+from sklearn.preprocessing import QuantileTransformer, PowerTransformer, StandardScaler, RobustScaler
+from sklearn.decomposition import PCA
 
 def get_classes(CSI01_stim_lists):
     parent_list = []
@@ -69,15 +69,26 @@ class Bold5000(Dataset):
         self.brain_target_data = self.data['RHPPA']
         #self.brain_target_data = torch.tensor(self.brain_target_data)
 
-        quantile_transformer = QuantileTransformer(random_state=0, output_distribution='normal')#,n_quantiles=92
+        #quantile_transformer = QuantileTransformer(random_state=0, output_distribution='uniform')#,n_quantiles=92
         #quantile_transformer = PowerTransformer(method='yeo-johnson')#,n_quantiles=92
-        #quantile_transformer = StandardScaler()#,n_quantiles=92
+        quantile_transformer = StandardScaler()#,n_quantiles=92
+        #quantile_transformer = RobustScaler()#,n_quantiles=92
         self.brain_target_data=torch.tensor(quantile_transformer.fit_transform(self.brain_target_data))
+        pca=PCA(n_components=8)
+        self.brain_target_data = pca.fit_transform( self.brain_target_data)
 
+        self.brain_target_data = (self.brain_target_data - self.brain_target_data.min()) / (
+                    self.brain_target_data.max() - self.brain_target_data.min())
+
+        self.brain_target_data = torch.tensor(self.brain_target_data)
 
         #self.brain_target_data=(self.brain_target_data - self.brain_target_data.min())/(self.brain_target_data.max()-self.brain_target_data.min())
         #self.brain_target_data=torch.tensor(self.brain_target_data)
         #self.brain_target_data= (self.brain_target_data - self.brain_target_data.mean()) / self.brain_target_data.std()
+        #print(self.brain_target_data.max())
+        #print(self.brain_target_data.min())
+        #print(self.brain_target_data.mean())
+        #print(self.brain_target_data.std())
 
         #print(self.brain_target_data[0])
 

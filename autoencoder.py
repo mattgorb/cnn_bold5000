@@ -45,7 +45,6 @@ def loss_fmri( fmri_out1, fmri_target):
     loss=c(fmri_out1, fmri_target)
 
     #loss = F.binary_cross_entropy(fmri_out1, fmri_target, reduction='sum')
-
     return loss
 
 def train():
@@ -106,5 +105,5 @@ def test():
 
 
 
-train()
-#test()
+#train()
+test()

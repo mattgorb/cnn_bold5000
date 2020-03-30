@@ -55,11 +55,21 @@ class FMRIDirectTrainer():
         fmri_target=fmri_target.type(torch.float32)
         #fmri_loss=F.binary_cross_entropy(fmri_out1,fmri_target, reduction='sum')
 
-        fmri_loss=self.loss(fmri_out1,fmri_target)
+        #fmri_loss=self.loss(fmri_out1,fmri_target)
         #fmri_loss=F.binary_cross_entropy(fmri_out1, fmri_target, reduction='sum')
 
-        #fmri_loss = (self.cos(fmri_out1, fmri_target))#.pow(2).mean()
+
+
+        #fmri_loss =(1- self.cos(fmri_out1, fmri_target)).pow(2).mean()*self.batch_size
+        fmri_loss=self.loss(fmri_out1, fmri_target)
         #print(fmri_loss)
+        '''print(fmri_out1[0])
+        print(fmri_target[0])
+        print(self.loss(fmri_out1[0],fmri_target[0]))
+        sys.exit()'''
+
+
+
         #sys.exit()
 
         #similarity from paper https://papers.nips.cc/paper/9149-learning-from-brains-how-to-regularize-machines.pdf
@@ -78,8 +88,8 @@ class FMRIDirectTrainer():
     def train(self):
         for epoch in range(self.epochs):
             mean_epoch_loss = self.train_epoch(epoch)
-            #print('Epoch: {} Average loss: {:.2f}'.format(epoch + 1, self.batch_size * mean_epoch_loss))
-            #self.test_epoch(epoch)
+            #print(mean_epoch_loss)
+            self.test_epoch(epoch)
             self.scheduler.step()
 
 
@@ -117,21 +127,21 @@ class FMRIDirectTrainer():
             epoch_loss += train_loss
             print_every_loss += train_loss
 
-        print(epoch_loss)
-        if epoch_loss<self.best:
-            self.best=epoch_loss
-            print('saving...loss='+str(epoch_loss))
-            torch.save(self.model.state_dict(), self.weight_file)
+        avg_loss=epoch_loss / len(self.fmri_data.imagenet_idxs)
+        '''if avg_loss<self.best:
+            self.best=avg_loss
+            print('saving...loss='+str(avg_loss))
+            torch.save(self.model.state_dict(), self.weight_file)'''
 
         # Return mean epoch loss
-        return epoch_loss / len(self.fmri_data.imagenet_idxs)
+        return avg_loss
 
     def test_epoch(self, epoch):
         epoch_loss = 0.
         self.model.eval()
 
-        for batch_idx in range(int(len(self.fmri_data.test)/self.batch_size)):
-            fmri_data, fmri_target = self.fmri_data.get_batch(True)
+        for batch_idx in range(int(len(self.fmri_data.imagenet_idxs)/self.batch_size)):
+            fmri_data, fmri_target = self.fmri_data.get_batch()
 
             if self.random:
                 fmri_target=torch.rand_like(fmri_target)
@@ -139,24 +149,21 @@ class FMRIDirectTrainer():
             if self.use_cuda:
                 fmri_data, fmri_target = fmri_data.cuda(), fmri_target.cuda()
 
-            fmri_out1 = self.model.forward_single_fmri(fmri_data)
+            fmri_out1 = self.model(fmri_data)
             loss = self.loss_fmri( fmri_out1, fmri_target,log_fmri_corr=True)
             train_loss = loss.item()
             epoch_loss += train_loss
 
-        fmri_loss_file="results/fmri_only_dissimilarity_layer_"+str(self.regularize_layer)+".txt"
-        if epoch > 0:
-            outF = open(fmri_loss_file, "a")
-        else:
-            outF = open(fmri_loss_file, "w")
+            #print(loss)
+            #print(fmri_out1[0])
+            #print(fmri_target[0])
+            #sys.exit()
 
-        for line in self.fmri_loss:
-            outF.write(line)
-            outF.write("\n")
-        outF.close()
-        self.fmri_loss = []
-        print(epoch_loss)
-        if epoch_loss<self.best:
-            self.best=epoch_loss
-            print('saving...loss='+str(epoch_loss))
+
+
+        avg_loss = epoch_loss / int(len(self.fmri_data.imagenet_idxs)/self.batch_size)
+        print(avg_loss)
+        if avg_loss<self.best:
+            self.best=avg_loss
+            print('saving...loss='+str(avg_loss))
             torch.save(self.model.state_dict(), self.weight_file)

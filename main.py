@@ -32,9 +32,9 @@ if only_fmri:
     random=False
 
     model = resnet18(regularize_layer=regularize_layer)
-    #model=vgg11(num_classes=200)
+    model=vgg16(num_classes=200)
 
-    weight_file = 'model_weights/resnet50_fmri_only_layer_vgg' + str(regularize_layer) + '_random_'+str(random)+'.pth'
+    weight_file = 'model_weights/pca.pth'
 
     # Check for cuda
     use_cuda = torch.cuda.is_available()
